@@ -3,26 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Detail;
 
 class Peminjaman extends Model
 {
-    protected $table = "peminjaman";
-    protected $fillable = ["tanggal_peminjaman","id_peminjam","id_guru","keterangan"];
-    protected $primaryKey = 'id_peminjaman';
+    protected $table = 'detail_peminjaman';
+    protected $primaryKey = 'id_detail_peminjaman';
 
-    public function peminjam()
+    protected $fillable = [
+        'id_peminjaman',
+        'id_barang',
+        'jumlah_pinjam',
+        'kelengkapan_pinjam',
+        'kelengkapan_kembali',
+    ];
+
+    public function peminjaman()
     {
-        return $this->belongsTo(Peminjam::class, 'id_peminjam');
+        return $this->belongsTo(Peminjaman::class, 'id_peminjaman');
     }
 
-    public function guru()
+    public function barang()
     {
-        return $this->belongsTo(Guru::class, 'id_guru');
-    }
-
-    public function detailPeminjaman()
-    {
-        return $this->hasMany(Detail::class, 'id_peminjaman');
+        return $this->belongsTo(Barang::class, 'id_barang');
     }
 }

@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Kategori;
-use App\Models\Detail;
 
 class Barang extends Model
 {
-    protected $table = "barang";
-    protected $primaryKey = "id_barang";
-    protected $fillable = ["nama_barang", "merk", "stok", "id_kategori"];
+    protected $table = 'barang';
+    protected $primaryKey = 'id_barang';
 
-    public function kategori() {
-        return $this->belongsTo(Kategori::class);
+    protected $fillable = ['nama_barang', 'stok', 'id_kategori'];
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori');
     }
-    public function detailPeminjaman(){
+
+    public function detail()
+    {
         return $this->hasMany(Detail::class, 'id_barang');
     }
 }

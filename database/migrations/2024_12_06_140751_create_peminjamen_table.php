@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id('id_peminjaman');
             $table->date('tanggal_peminjaman');
-            $table->foreignId('id_peminjam')->constrained('peminjam')->cascadeOnDelete();
-            $table->foreignId('id_guru')->constrained('guru')->cascadeOnDelete();
-            $table->text('keterangan')->nullable();
+            $table->date('tanggal_pengembalian');
+            $table->unsignedBigInteger('id_peminjam');
+            $table->unsignedBigInteger('id_guru');
+            $table->string('status');
             $table->timestamps();
+
+            $table->foreign('id_peminjam')->references('id_peminjam')->on('peminjam')->onDelete('cascade');
+            $table->foreign('id_guru')->references('id_guru')->on('guru')->onDelete('cascade');
         });
     }
 

@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Peminjam extends Model
 {
-    protected $table = "peminjam";
-    protected $fillable = ["nama", "kelas"];
+    protected $table = 'pemijam';
+    protected $primaryKey = 'id_peminjam';
+
+    protected $fillable = ['nama', 'kelas'];
+
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class, 'id_peminjam');
+    }
 }
