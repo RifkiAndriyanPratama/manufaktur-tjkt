@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,17 @@ Route::get('/kategori//{id_kategori}/edit', [KategoriController::class,'edit'])-
 Route::put('/kategori/{id_kategori}', [KategoriController::class, 'update'])->name('kategori.update');
 Route::delete('/kategori/{id_kategori}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 
+
+Route::get('/admin', [AdminController::class, 'index' ])->name('admin.management');
+
+Route::get('/admin/kategori', function () {
+    return view('admin.kategori');
+})->name('admin.kategori');
+
+Route::get('/admin/detail', function () {
+    return view('admin.detail');
+})->name('admin.detail');
+
+Route::get('/admin/riwayat', function () {
+    return view('admin.riwayat');
+})->name('admin.riwayat');
