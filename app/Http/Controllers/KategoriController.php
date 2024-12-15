@@ -10,7 +10,7 @@ class KategoriController extends Controller
     public function index(){
         $kategori = Kategori::all();
         $kategori = Kategori::orderBy('id_kategori', 'asc')->get();
-        return view("kategori.index",compact("kategori"));
+        return view("admin.kategori",compact("kategori"));
     }
 
     public function create(){

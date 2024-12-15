@@ -28,8 +28,8 @@ Route::delete('/kategori/{id_kategori}', [KategoriController::class, 'destroy'])
 Route::get('/admin', [AdminController::class, 'index' ])->name('admin.management');
 
 Route::get('/admin/kategori', function () {
-    return view('admin.kategori');
-})->name('admin.kategori');
+    return view('kategori.index');
+})->name('kategori.index');
 
 Route::get('/admin/detail', function () {
     return view('admin.detail');

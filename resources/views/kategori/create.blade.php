@@ -6,6 +6,7 @@
     <title>Tambah Kategori</title>
 </head>
 <body>
+    
     <h1>Tambah Kategori Baru</h1>
     <form action="{{ route('kategori.store') }}" method="POST">
         @csrf

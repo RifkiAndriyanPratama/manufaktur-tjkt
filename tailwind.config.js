@@ -15,6 +15,11 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'hvrbtn': '#0F3DEB',
+                'bgside': '#EEEEEE',
+                'bgnav': '#D9D9D9',
+            },
         },
     },
     plugins: [

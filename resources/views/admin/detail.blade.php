@@ -1,7 +1,3 @@
-@extends('lyadmin')
-
-@section('crud')
-
-<h1>detail</h1>
-
-@endsection
+<x-layout-admin>
+    <h1>detail</h1>
+</x-layout-admin>
