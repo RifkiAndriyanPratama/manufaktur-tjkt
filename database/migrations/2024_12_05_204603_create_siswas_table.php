@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('siswa', function (Blueprint $table) {
             $table->id('id_siswa');
             $table->string('nama_siswa');
-            $table->foreignId('id_kelas')->constrained('kelas')->onDelete('cascade');
+            $table->foreignId('id_kelas')->constrained('kelas', 'id_kelas')->onDelete('cascade');
             $table->timestamps();
         });
     }
