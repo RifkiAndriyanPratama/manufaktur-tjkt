@@ -5,15 +5,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index' ])->name('admin.management');
@@ -41,6 +38,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/kelas//{id_kelas}/edit', [KelasController::class,'edit'])->name('kelas.edit');
     Route::put('/kelas/{id_kelas}', [KelasController::class, 'update'])->name('kelas.update');
     Route::delete('/kelas/{id_kelas}', [KelasController::class, 'destroy'])->name('kelas.destroy');
+
+    // Route Siswa
+    Route::get('/siswa', [SiswaController::class, 'index' ])->name('siswa.index');
+    Route::get('/siswa/create', [SiswaController::class,'create'])->name('siswa.create');
+    Route::post('/siswa', [SiswaController::class,'store'])->name('siswa.store');
+    Route::get('/siswa//{id_siswa}/edit', [SiswaController::class,'edit'])->name('siswa.edit');
+    Route::put('/siswa/{id_siswa}', [SiswaController::class, 'update'])->name('siswa.update');
+    Route::delete('/siswa/{id_siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
 });
+    
 
 require __DIR__.'/auth.php';

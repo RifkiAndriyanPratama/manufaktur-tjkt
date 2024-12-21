@@ -17,7 +17,7 @@ class Siswa extends Model
     // Relasi dengan Kelas
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class);
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 
     // Relasi dengan Peminjaman
