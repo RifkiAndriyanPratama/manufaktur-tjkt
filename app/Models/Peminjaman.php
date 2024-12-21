@@ -6,25 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Peminjaman extends Model
 {
-    protected $table = 'detail';
-    protected $primaryKey = 'id_detail';
+    protected $table = 'peminjaman';
+    protected $primaryKey = 'id_peminjaman';
 
     protected $fillable = [
-        'id_peminjaman',
-        'id_siswa',
-        'id_barang',
-        'jumlah_pinjam',
-        'kelengkapan_pinjam',
-        'kelengkapan_kembali',
+        'id_kelas',
+        'guru_pembimbing',
+        'materi_praktik',
+        'jam_mulai',
+        'jam_selesai',
     ];
 
-    public function peminjaman()
+    public function kelas()
     {
-        return $this->belongsTo(Peminjaman::class, 'id_peminjaman');
-    }
-
-    public function barang()
-    {
-        return $this->belongsTo(Barang::class, 'id_barang');
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 }

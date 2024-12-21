@@ -6,11 +6,14 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\PeminjamanController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
+
+Route::get('/', [PeminjamanController::class,'index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index' ])->name('admin.management');
@@ -48,5 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/siswa/{id_siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
 });
     
+Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
+Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
 
 require __DIR__.'/auth.php';
