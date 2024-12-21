@@ -8,7 +8,7 @@ class Kelas extends Model
 {
     protected $table = "kelas";
     protected $primaryKey = 'id_kelas';
-    protected $fillable = ['nama_kelas', 'guru_pembimbing','materi_praktik', 'jam'];
+    protected $fillable = ['nama_kelas'];
 
     public function siswa()
     {

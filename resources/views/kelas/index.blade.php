@@ -16,9 +16,6 @@
             <thead>
                 <tr>
                     <th>Nama Kelas</th>
-                    <th>Guru Pembimbing</th>
-                    <th>Materi Praktik</th>
-                    <th>Jam</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -26,9 +23,6 @@
                 @foreach ($kelas as $k)
                     <tr>
                         <td>{{ $k->nama_kelas }}</td>
-                        <td>{{ $k->guru_pembimbing }}</td>
-                        <td>{{ $k->materi_praktik }}</td>
-                        <td>{{ $k->jam }}</td>
                         <td>
                             <!-- Edit Button -->
                             <a href="{{ route('kelas.edit', $k->id_kelas) }}">Edit</a>

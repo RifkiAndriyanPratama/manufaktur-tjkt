@@ -22,16 +22,10 @@ class KelasController extends Controller
         
         $request->validate([
             'nama_kelas' => 'required|string|max:255',
-            'guru_pembimbing' => 'required|string|max:255',
-            'materi_praktik' => 'required|string|max:255',
-            'jam'=> 'required|string|max:255',
         ]);
     
         Kelas::create([
             'nama_kelas' => $request->nama_kelas,
-            'guru_pembimbing' => $request->guru_pembimbing,
-            'materi_praktik' => $request->materi_praktik,
-            'jam'=> $request->jam,
         ]);
     
         return redirect()->route('kelas.index')->with('success', 'Kelas Ditambahkan');
@@ -45,9 +39,6 @@ class KelasController extends Controller
     public function update(Request $request, $id_kelas){
         $request->validate([
             'nama_kelas' => 'required|string|max:255',
-            'guru_pembimbing' => 'required|string|max:255',
-            'materi_praktik' => 'required|string|max:255',
-            'jam'=> 'required|string|max:255',
         ]);
 
         $kelas = Kelas::find($id_kelas);
