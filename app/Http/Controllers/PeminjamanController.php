@@ -15,8 +15,7 @@ class PeminjamanController extends Controller
     }
     public function create()
     {
-        // Ambil data kelas untuk ditampilkan di dropdown
-        $kelas = Kelas::all(); // Sesuaikan dengan model kelas Anda
+        $kelas = Kelas::all(); 
 
         return view('peminjaman.create', compact('kelas'));
     }

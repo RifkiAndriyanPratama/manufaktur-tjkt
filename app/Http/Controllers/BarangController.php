@@ -8,11 +8,22 @@ use App\Models\Kategori;
 
 class BarangController extends Controller
 {
-    public function index(){
-        $barang = Barang::all();
-        $barang = Barang::orderBy('id_barang', 'asc')->get();
-        return view("barang.index", compact("barang"));
+    public function index(Request $request){
+    $query = Barang::with('kategori'); 
+
+    if ($request->has('search') && !empty($request->search)) {
+        $query->where('nama_barang', 'like', '%' . $request->search . '%')
+              ->orWhereHas('kategori', function ($q) use ($request) {
+                  $q->where('nama_kategori', 'like', '%' . $request->search . '%');
+              });
     }
+
+    $barang = $query->orderBy('id_barang', 'asc')->get();
+
+    return view('barang.index', compact('barang'));
+    }
+
+
 
     public function create(){
         $kategori = Kategori::all();

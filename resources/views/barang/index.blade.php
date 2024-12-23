@@ -9,6 +9,12 @@
 <body>
     <a href="{{ route('barang.create') }}">Tambah Barang</a>
 
+    <form action="{{ route('barang.index') }}" method="GET">
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari barang atau kategori">
+        <button type="submit">Cari</button>
+    </form>
+    
+
     @if($barang->isEmpty())
         <p>Tidak ada barang yang tersedia.</p>
     @else
