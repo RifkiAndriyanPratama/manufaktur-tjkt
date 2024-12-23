@@ -13,6 +13,9 @@
         <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari barang atau kategori">
         <button type="submit">Cari</button>
     </form>
+
+
+    <p>Jumlah barang yang tersedia {{ $jumlahBarang }}</p>
     
 
     @if($barang->isEmpty())
