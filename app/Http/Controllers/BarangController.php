@@ -37,13 +37,11 @@ class BarangController extends Controller
     
     $request->validate([
         'nama_barang' => 'required|string|max:255',
-        'stok' => 'required|integer|min:0',
         'id_kategori' => 'required|exists:kategori,id_kategori',
     ]);
 
     Barang::create([
         'nama_barang' => $request->nama_barang,
-        'stok' => $request->stok,
         'id_kategori' => $request->id_kategori,
     ]);
 
@@ -59,7 +57,6 @@ class BarangController extends Controller
     public function update(Request $request, $id_barang){
     $request->validate([
         'nama_barang' => 'required|string|max:255',
-        'stok' => 'required|integer|min:0',
         'id_kategori' => 'required|exists:kategori,id_kategori',
     ]);
 

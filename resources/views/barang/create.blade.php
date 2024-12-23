@@ -11,8 +11,6 @@
         @csrf
         <label for="nama_barang">Nama Barang</label>
         <input type="text" name="nama_barang" id="nama_barang" required><br>
-        <label for="stok">Stok</label>
-        <input type="number" name="stok" id="stok" required><br>
         <label for="kategori">Kategori</label>
         <select name="id_kategori" id="kategori" required>
             <option value="" disabled selected>Pilih Kategori</option>

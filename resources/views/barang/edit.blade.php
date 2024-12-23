@@ -13,9 +13,6 @@
         <label for="nama_barang">Nama Barang</label>
         <input type="text" name="nama_barang" id="nama_barang" value="{{ $barang->nama_barang }}" required><br>
 
-        <label for="stok">Stok</label>
-        <input type="number" name="stok" id="stok" value="{{ $barang->stok }}" required><br>
-
         <label for="kategori">Kategori</label>
         <select name="id_kategori" id="kategori" required>
             <option value="" disabled>Pilih Kategori</option>

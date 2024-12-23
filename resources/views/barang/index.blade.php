@@ -25,7 +25,6 @@
             <thead>
                 <tr>
                     <th>Nama Barang</th>
-                    <th>Stok</th>
                     <th>Kategori</th>
                     <th>Aksi</th>
                 </tr>
@@ -34,7 +33,6 @@
                 @foreach ($barang as $b)
                     <tr>
                         <td>{{ $b->nama_barang }}</td>
-                        <td>{{ $b->stok }}</td>
                         <td>{{ $b->kategori->nama_kategori }}</td>
                         <td>
                             <!-- Edit Button -->
