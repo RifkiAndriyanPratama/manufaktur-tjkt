@@ -10,6 +10,10 @@
     <a href="{{ route('login') }}">Login</a>
     <a href="{{ route('register') }}">Register</a>
     <br>
+    <form action="/" method="GET">
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari barang atau kategori">
+        <button type="submit">Cari</button>
+    </form>
     <br>
     <a href="{{ route('peminjaman.create') }}">+</a>
     @if($peminjaman->isEmpty())

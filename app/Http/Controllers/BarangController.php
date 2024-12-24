@@ -12,9 +12,9 @@ class BarangController extends Controller
     $query = Barang::with('kategori'); 
 
     if ($request->has('search') && !empty($request->search)) {
-        $query->where('nama_barang', 'like', '%' . $request->search . '%')
+        $query->where('nama_barang', 'ilike', '%' . $request->search . '%')
               ->orWhereHas('kategori', function ($q) use ($request) {
-                  $q->where('nama_kategori', 'like', '%' . $request->search . '%');
+                  $q->where('nama_kategori', 'ilike', '%' . $request->search . '%');
               });
     }
 

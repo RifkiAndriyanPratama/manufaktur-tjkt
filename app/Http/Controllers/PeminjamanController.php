@@ -10,8 +10,17 @@ use Illuminate\Http\Request;
 
 class PeminjamanController extends Controller
 {
-    public function index(){
-        $peminjaman = Peminjaman::all();
+    public function index(Request $request){
+        $query = Peminjaman::with('kelas'); 
+    
+        if ($request->has('search') && !empty($request->search)) {
+            $query->whereHas('kelas', function ($q) use ($request) {
+                $q->where('nama_kelas', 'ilike', '%' . $request->search . '%');
+            });
+        }
+
+        $peminjaman = $query->get();
+
         return view("home",compact("peminjaman"));
     }
     public function create()
