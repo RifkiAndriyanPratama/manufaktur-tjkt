@@ -19,10 +19,11 @@ class BarangController extends Controller
     }
 
     $barang = $query->orderBy('id_barang', 'asc')->get();
+    $kategori = $query->get();
 
     $jumlahBarang = $barang->count();
 
-    return view('barang.index', compact('barang', 'jumlahBarang'));
+    return view('barang.index', compact('barang', 'jumlahBarang', 'kategori'));
     }
 
 
