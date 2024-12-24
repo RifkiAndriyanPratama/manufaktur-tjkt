@@ -23,6 +23,7 @@
                     <th>Materi Praktik</th>
                     <th>Jam Mulai</th>
                     <th>Jam Selesai</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,9 @@
                         <td>{{ $p->materi_praktik }}</td>
                         <td>{{ $p->jam_mulai }}</td>
                         <td>{{ $p->jam_selesai }}</td>
+                        <td>
+                            <a href="{{ route('peminjaman.show', $p->id_peminjaman) }}">Detail</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

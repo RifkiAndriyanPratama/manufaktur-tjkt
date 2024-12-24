@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Detail extends Model
+class DetailPeminjaman extends Model
 {
     protected $table = 'detail';
     protected $primaryKey = 'id_detail';
 
     protected $fillable = [
         'id_peminjaman',
+        'nama_peminjam',
         'id_barang',
         'jumlah_pinjam',
         'kelengkapan_pinjam',
@@ -27,3 +28,4 @@ class Detail extends Model
         return $this->belongsTo(Barang::class, 'id_barang');
     }
 }
+

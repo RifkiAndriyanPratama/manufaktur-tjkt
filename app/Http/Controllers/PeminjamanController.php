@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use App\Models\Peminjaman;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 
 
@@ -36,5 +37,28 @@ class PeminjamanController extends Controller
 
         return redirect('/')->with('success', 'Data Peminjaman Berhasil Ditambahkan!');
     }
+
+    public function show($id_peminjaman){
+        $barang = Barang::all();
+        $peminjaman = Peminjaman::with('details')->findOrFail($id_peminjaman);
+        return view('peminjaman.show', compact('peminjaman', 'barang'));
+    }
+
+    public function pengembalian(Request $request, $id_peminjaman)
+    {
+        $peminjaman = Peminjaman::findOrFail($id_peminjaman);
+        $peminjaman->update([
+            'tanggal_pengembalian' => $request->tanggal_pengembalian,
+            'status' => 'dikembalikan',
+        ]);
+        return redirect('/');
+    }
+
+    // public function exportPdf()
+    // {
+    //     $peminjaman = Peminjaman::with('details')->get();
+    //     $pdf = PDF::loadView('peminjaman.pdf', compact('peminjaman'));
+    //     return $pdf->download('riwayat_peminjaman.pdf');
+    // }
 }
 

@@ -51,7 +51,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/siswa/{id_siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
 });
     
+// Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
+// Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+
+
 Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
 Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+Route::get('/peminjaman/{id_peminjaman}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
+Route::post('/peminjaman/{id_peminjaman}/pengembalian', [PeminjamanController::class, 'pengembalian'])->name('peminjaman.pengembalian');
+Route::get('/peminjaman/export-pdf', [PeminjamanController::class, 'exportPdf'])->name('peminjaman.export-pdf');
 
 require __DIR__.'/auth.php';
