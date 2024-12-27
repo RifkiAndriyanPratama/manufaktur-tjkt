@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_kelas');
             $table->string('guru_pembimbing');
             $table->string('materi_praktik');
-            $table->time('jam_mulai');
-            $table->time('jam_selesai');
+            $table->string('jam_mulai');
+            $table->string('jam_selesai');
             $table->timestamps();
         
             $table->foreign('id_kelas')->references('id_kelas')->on('kelas')->onDelete('cascade');

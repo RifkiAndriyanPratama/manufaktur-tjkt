@@ -32,13 +32,14 @@ class PeminjamanController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         // Validasi input
         $request->validate([
             'id_kelas' => 'required',
             'guru_pembimbing' => 'required|string',
             'materi_praktik' => 'required|string',
-            'jam_mulai' => 'required|date_format:H:i',
-            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required',
         ]);
 
         // Simpan data peminjaman

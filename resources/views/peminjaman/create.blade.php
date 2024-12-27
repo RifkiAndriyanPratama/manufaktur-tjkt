@@ -21,10 +21,10 @@
         <label for="materi_praktik">Materi Praktik</label>
         <input type="text" name="materi_praktik" id="materi_praktik" required><br>
         <label for="jam_mulai">Jam Mulai</label>
-        <input type="time" name="jam_mulai" id="jam_mulai" required><br>
+        <input type="string" name="jam_mulai" id="jam_mulai" required><br>
         <label for="jam_selesai">Jam Selesai</label>
-        <input type="time" name="jam_selesai" id="jam_selesai" required><br>
-        <button type="submit">Simpan peminjaman</button>
+        <input type="string" name="jam_selesai" id="jam_selesai" required><br>
+        <button type="string">Simpan peminjaman</button>
     </form>
 </body>
 </html>
