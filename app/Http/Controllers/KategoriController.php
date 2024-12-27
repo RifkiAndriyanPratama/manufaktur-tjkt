@@ -11,7 +11,7 @@ class KategoriController extends Controller
     $query = Kategori::query();
 
     if ($request->has('search') && !empty($request->search)) {
-        $query->where('nama_kategori', 'like', '%' . $request->search . '%');
+        $query->where('nama_kategori', 'ilike', '%' . $request->search . '%');
     }
 
     $kategori = $query->orderBy('id_kategori', 'asc')->get();
