@@ -8,25 +8,33 @@ use App\Models\Kategori;
 
 class BarangController extends Controller
 {
-    public function index(Request $request){
-    $query = Barang::with('kategori'); 
+    public function index(Request $request)
+    {
+        $query = Barang::with('kategori');
 
-    if ($request->has('search') && !empty($request->search)) {
-        $query->where('nama_barang', 'ilike', '%' . $request->search . '%')
-              ->orWhereHas('kategori', function ($q) use ($request) {
-                  $q->where('nama_kategori', 'ilike', '%' . $request->search . '%');
-              });
+        // Filter berdasarkan kategori
+        if ($request->filled('id_kategori') && $request->id_kategori != 'all') {
+            $query->where('id_kategori', $request->id_kategori);
+        }
+        
+        // Filter berdasarkan pencarian
+        if ($request->filled('search')) {
+            $query->where('nama_barang', 'like', '%' . $request->search . '%')
+                  ->orWhereHas('kategori', function ($q) use ($request) {
+                      $q->where('nama_kategori', 'like', '%' . $request->search . '%');
+                  });
+        }
+        
+        $barang = $query->orderBy('id_barang', 'asc')->get();
+        $kategori = Kategori::all();
+        
+        $jumlahBarang = $barang->count();
+        
+        return view('admin.management', compact('barang', 'jumlahBarang', 'kategori'));
+        
     }
 
-    $barang = $query->orderBy('id_barang', 'asc')->get();
-    $kategori = $query->get();
-
-    $jumlahBarang = $barang->count();
-
-    return view('barang.index', compact('barang', 'jumlahBarang', 'kategori'));
-    }
-
-
+    
 
     public function create(){
         $kategori = Kategori::all();
