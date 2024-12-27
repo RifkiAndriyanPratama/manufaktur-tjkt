@@ -7,8 +7,15 @@ use App\Models\Kelas;
 
 class KelasController extends Controller
 {
-    public function index(){
-        $kelas = Kelas::all();
+    public function index(Request $request){
+        $query = Kelas::query();
+
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('nama_kelas', 'ilike', '%' . $request->search . '%');
+        }
+
+        $kelas = $query->get();
+    
         return view("admin.kelas",compact("kelas"));
     }
     
