@@ -1,6 +1,13 @@
 <!-- sidebar -->
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform -translate-x-full bg-gray-200 border-r border-gray-200 sm:translate-x-0 z-20" aria-label="Sidebar">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-gray-200 border-r border-gray-200 sm:translate-x-0 z-20" aria-label="Sidebar">
    <div class="h-full px-3 pb-4 overflow-y-auto bg-gray-200">
+      <!-- logo -->
+   <div class="fixed top-3">
+         <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_the_NSDAP_%281920%E2%80%931945%2C_1-1%29.svg/600px-Flag_of_the_NSDAP_%281920%E2%80%931945%2C_1-1%29.svg.png" class="h-8 me-3" alt="FlowBite Logo" />
+           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">Admin</span>
+         </a>
+      </div>
    <hr class="border-gray-600 mb-2 flex-shrink-0" />
       <ul class="space-y-2 font-medium">
          <li>
@@ -54,7 +61,7 @@
             <span class="flex-shrink-0 ms-2 ml-4 text-base transition-opacity duration-300">Riwayat Peminjaman</span>
             </a>
          </li>
-         <div class="absolute bottom-4 left-4 w-full">
+         <div class="fixed bottom-4 left-4 w-full">
          <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                @csrf
                <button type="submit" class="flex items-center p-2 text-gray-900 content-center rounded-lg hover:text-white text-gray-900 hover:bg-red-500 group transform transition duration-300 ease-in-out hover:scale-100 hover:translate-x-1">

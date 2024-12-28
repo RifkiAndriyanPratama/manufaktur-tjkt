@@ -24,7 +24,7 @@
     </div>
 
     <!-- Tabel kelas -->
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto rounded-xl">
         <table class="min-w-full bg-white rounded-xl">
             <thead class="bg-gray-400 rounded-xl">
                 <tr>
@@ -60,7 +60,7 @@
                 <!-- Modal Edit -->
                 <div id="editModal-{{ $item->id_kelas }}" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
                     <div class="bg-white rounded-lg shadow-lg w-1/3">
-                        <div class="border-b px-4 py-2 flex justify-between items-center">
+                        <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-gray-300 items-center">
                             <h2 class="text-xl font-bold">Edit kelas</h2>
                             <button onclick="document.getElementById('editModal-{{ $item->id_kelas }}').classList.add('hidden')" class="text-gray-600">&times;</button>
                         </div>
@@ -82,7 +82,7 @@
                 <!-- Modal Hapus -->
                 <div id="deleteModal-{{ $item->id_kelas }}" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
                     <div class="bg-white rounded-lg shadow-lg w-1/3">
-                        <div class="border-b px-4 py-2 flex justify-between items-center">
+                        <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-gray-300 items-center">
                             <h2 class="text-xl font-bold">Konfirmasi Hapus</h2>
                             <button onclick="document.getElementById('deleteModal-{{ $item->id_kelas }}').classList.add('hidden')" class="text-gray-600">&times;</button>
                         </div>
@@ -107,7 +107,7 @@
     <!-- Modal Tambah kelas -->
     <div id="addModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg w-1/3">
-            <div class="border-b px-4 py-2 flex justify-between items-center">
+            <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-gray-300 items-center">
                 <h2 class="text-xl font-bold">Tambah kelas</h2>
                 <button onclick="document.getElementById('addModal').classList.add('hidden')" class="text-gray-600">&times;</button>
             </div>

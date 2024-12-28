@@ -6,10 +6,10 @@
     <div class="flex justify-between items-center mb-4">
     <form action="{{ route('barang.index') }}" method="GET" class="flex items-center w-full max-w-lg">
         <!-- Dropdown Kategori -->
-        <select name="id_kategori" class="border border-gray-300 text-gray-500 rounded-l-xl px-4 py-2">
-            <option value="all" {{ request('id_kategori') == 'all' ? 'selected' : '' }}>All</option>
+        <select name="id_kategori" class="border border-gray-300 text-gray-500 text-center rounded-l-xl pr-8 py-2">
+            <option class="text-left" value="all" {{ request('id_kategori') == 'all' ? 'selected' : '' }}>All Kategory</option>
             @foreach ($kategori as $k)
-                <option value="{{ $k->id_kategori }}" {{ request('id_kategori') == $k->id_kategori ? 'selected' : '' }}>
+                <option class="text-left" value="{{ $k->id_kategori }}" {{ request('id_kategori') == $k->id_kategori ? 'selected' : '' }}>
                     {{ $k->nama_kategori }}
                 </option>
             @endforeach
@@ -42,7 +42,7 @@
     </div>
 
     <!-- Tabel Barang -->
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto rounded-xl">
         <table class="min-w-full bg-white rounded-xl">
             <thead class="bg-gray-400 rounded-xl">
                 <tr>
@@ -80,7 +80,7 @@
                 <!-- Modal Edit -->
                 <div id="editModal-{{ $item->id_barang }}" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
                     <div class="bg-white rounded-lg shadow-lg w-1/3">
-                        <div class="border-b px-4 py-2 flex justify-between items-center">
+                        <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-gray-300 items-center">
                             <h2 class="text-xl font-bold">Edit Barang</h2>
                             <button onclick="document.getElementById('editModal-{{ $item->id_barang }}').classList.add('hidden')" class="text-gray-600">&times;</button>
                         </div>
@@ -112,7 +112,7 @@
                 <!-- Modal Hapus -->
                 <div id="deleteModal-{{ $item->id_barang }}" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
                     <div class="bg-white rounded-lg shadow-lg w-1/3">
-                        <div class="border-b px-4 py-2 flex justify-between items-center">
+                        <div class="border-b px-4 py-2 flex justify-between items-center rounded-t-lg bg-gray-300">
                             <h2 class="text-xl font-bold">Konfirmasi Hapus</h2>
                             <button onclick="document.getElementById('deleteModal-{{ $item->id_barang }}').classList.add('hidden')" class="text-gray-600">&times;</button>
                         </div>
@@ -137,7 +137,7 @@
     <!-- Modal Tambah Barang -->
     <div id="addModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg w-1/3">
-            <div class="border-b px-4 py-2 flex justify-between items-center">
+            <div class="border-b px-4 py-2 flex justify-between bg-gray-300 rounded-t-lg items-center">
                 <h2 class="text-xl font-bold">Tambah Barang</h2>
                 <button onclick="document.getElementById('addModal').classList.add('hidden')" class="text-gray-600">&times;</button>
             </div>

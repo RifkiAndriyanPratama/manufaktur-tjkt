@@ -14,7 +14,7 @@
    <x-sidebar-admin />
 
    <div class="flex p-10 sm:ml-64">
-      <div class="w-full border-gray rounded-lg mt-10">
+      <div class="w-full border-gray rounded-lg mt-0">
         <div class="">
               {{ $slot }}
         </div>
