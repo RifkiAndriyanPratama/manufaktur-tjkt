@@ -1,5 +1,5 @@
 
-<nav class="absoluted top-0 z-50 w-full bg-gray-200 border-b border-gray-200 z-10">
+<nav class="absoluted top-0 z-50 w-full border-b bg-gradient-to-r from-blue-900 to-blue-500 border-gray-200 z-10">
       <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
           <div class="flex items-center justify-start rtl:justify-end">

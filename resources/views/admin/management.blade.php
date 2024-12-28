@@ -21,7 +21,7 @@
         </div>
 
         <!-- Tombol Search -->
-        <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center justify-center">    
+        <button type="submit" class="ml-2 bg-blue-800 text-white px-4 py-2 rounded-lg flex items-center justify-center">    
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-6 h-6">
                 <circle cx="27" cy="27" r="16" stroke="currentColor" stroke-width="4" fill="none"></circle>
                 <rect x="38" y="38" width="8" height="20" rx="4" transform="rotate(45 38 38)" fill="currentColor"></rect>
@@ -34,7 +34,7 @@
     
         <!-- Tombol Tambah Barang -->
         <button 
-            class="ml-4 bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded-md flex items-center space-x-2" 
+            class="ml-4 bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-md flex items-center space-x-2" 
             onclick="document.getElementById('addModal').classList.remove('hidden')">
             <span class="font-bold text-xl">+</span>
             <span>Tambah Barang</span>
@@ -44,7 +44,7 @@
     <!-- Tabel Barang -->
     <div class="overflow-x-auto rounded-xl">
         <table class="min-w-full bg-white rounded-xl">
-            <thead class="bg-gray-400 rounded-xl">
+            <thead class="bg-blue-800 text-white border rounded-xl">
                 <tr>
                     <th class="px-4 py-2 text-left">No</th>
                     <th class="px-4 py-2 text-left">Nama Barang</th>
@@ -54,7 +54,7 @@
             </thead>
             <tbody>
                 @foreach($barang as $index => $item)
-                <tr class="hover:bg-gray-200 bg-gray-100">
+                <tr class="{{ $loop->odd ? 'bg-gray-200' : 'bg-gray-100' }} hover:bg-blue-200">
                     <td class="px-4 py-2">{{ $index + 1 }}</td>
                     <td class="px-4 py-2">{{ $item->nama_barang }}</td>
                     <td class="px-4 py-2">{{ $item->kategori->nama_kategori }}</td>
@@ -63,7 +63,7 @@
                             <!-- Tombol Edit -->
                             <button 
                                 onclick="document.getElementById('editModal-{{ $item->id_barang }}').classList.remove('hidden')"
-                                class="text-yellow-500 hover:text-yellow-600 text-xl">
+                                class="text-blue-800 hover:text-blue-900 text-xl">
                                 <i class="fas fa-pen-to-square"></i>
                             </button>
                     
@@ -80,9 +80,9 @@
                 <!-- Modal Edit -->
                 <div id="editModal-{{ $item->id_barang }}" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
                     <div class="bg-white rounded-lg shadow-lg w-1/3">
-                        <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-gray-300 items-center">
-                            <h2 class="text-xl font-bold">Edit Barang</h2>
-                            <button onclick="document.getElementById('editModal-{{ $item->id_barang }}').classList.add('hidden')" class="text-gray-600">&times;</button>
+                        <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-blue-800 items-center">
+                            <h2 class="text-xl text-white font-bold">Edit Barang</h2>
+                            <button onclick="document.getElementById('editModal-{{ $item->id_barang }}').classList.add('hidden')" class="text-white">&times;</button>
                         </div>
                         <form action="{{ route('barang.update', $item->id_barang) }}" method="POST" class="p-4">
                             @csrf
@@ -102,8 +102,8 @@
                                 </select>
                             </div>
                             <div class="flex justify-end py-4 px-4">
-                                <button type="button" onclick="document.getElementById('editModal-{{ $item->id_barang }}').classList.add('hidden')" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</button>
-                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Simpan</button>
+                                <button type="button" onclick="document.getElementById('editModal-{{ $item->id_barang }}').classList.add('hidden')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</button>
+                                <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">Simpan</button>
                             </div>
                         </form>
                     </div>
@@ -112,18 +112,18 @@
                 <!-- Modal Hapus -->
                 <div id="deleteModal-{{ $item->id_barang }}" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
                     <div class="bg-white rounded-lg shadow-lg w-1/3">
-                        <div class="border-b px-4 py-2 flex justify-between items-center rounded-t-lg bg-gray-300">
-                            <h2 class="text-xl font-bold">Konfirmasi Hapus</h2>
-                            <button onclick="document.getElementById('deleteModal-{{ $item->id_barang }}').classList.add('hidden')" class="text-gray-600">&times;</button>
+                        <div class="border-b px-4 py-2 flex justify-between items-center rounded-t-lg bg-blue-800">
+                            <h2 class="text-xl text-white font-bold">Konfirmasi Hapus</h2>
+                            <button onclick="document.getElementById('deleteModal-{{ $item->id_barang }}').classList.add('hidden')" class="text-white">&times;</button>
                         </div>
                         <div class="p-4">
                             <p>Apakah Anda yakin ingin menghapus barang ini?</p>
                             <div class="flex justify-end mt-4">
-                                <button onclick="document.getElementById('deleteModal-{{ $item->id_barang }}').classList.add('hidden')" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</button>
+                                <button onclick="document.getElementById('deleteModal-{{ $item->id_barang }}').classList.add('hidden')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</button>
                                 <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Hapus</button>
+                                    <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">Hapus</button>
                                 </form>
                             </div>
                         </div>
@@ -137,15 +137,15 @@
     <!-- Modal Tambah Barang -->
     <div id="addModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg w-1/3">
-            <div class="border-b px-4 py-2 flex justify-between bg-gray-300 rounded-t-lg items-center">
-                <h2 class="text-xl font-bold">Tambah Barang</h2>
-                <button onclick="document.getElementById('addModal').classList.add('hidden')" class="text-gray-600">&times;</button>
+            <div class="border-b px-4 py-2 flex justify-between bg-blue-800 rounded-t-lg items-center">
+                <h2 class="text-xl font-bold text-white">Tambah Barang</h2>
+                <button onclick="document.getElementById('addModal').classList.add('hidden')" class="text-white">&times;</button>
             </div>
             <form action="{{ route('barang.store') }}" method="POST" class="p-4">
                 @csrf
                 <div class="mb-4">
                     <label for="nama_barang" class="block text-gray-700">Nama Barang</label>
-                    <input type="text" name="nama_barang" class="border rounded px-4 py-2 w-full" required>
+                    <input type="text" name="nama_barang" placeholder="Masukan nama barang" class="border rounded px-4 py-2 w-full" required>
                 </div>
                 <div class="mb-4">
                     <label for="id_kategori" class="block text-gray-700">Kategori</label>
@@ -156,8 +156,8 @@
                     </select>
                 </div>
                 <div class="flex justify-end">
-                    <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')" class="flex bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</button>
-                    <button type="submit" class="flex bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tambah</button>
+                    <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')" class="flex bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</button>
+                    <button type="submit" class="flex bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">Tambah</button>
                 </div>
             </form>
         </div>
