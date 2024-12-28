@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "flowbite": "^2.5.2",
+        "toastr": "^2.1.4",
         "vite-svg-loader": "^5.1.0"
     }
 }

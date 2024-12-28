@@ -10,19 +10,30 @@ use Illuminate\Http\Request;
 
 class PeminjamanController extends Controller
 {
-    public function index(Request $request){
-        $query = Peminjaman::with('kelas'); 
-    
+    public function index(Request $request)
+    {
+        // Query untuk mendapatkan semua data kelas
+        $kelas = Kelas::all();
+
+        // Query untuk mendapatkan data peminjaman dengan atau tanpa search
+        $query = Peminjaman::with('kelas');
+
         if ($request->has('search') && !empty($request->search)) {
-            $query->whereHas('kelas', function ($q) use ($request) {
-                $q->where('nama_kelas', 'ilike', '%' . $request->search . '%');
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('kelas', function ($q) use ($search) {
+                    $q->where('nama_kelas', 'ilike', '%' . $search . '%');
+                })
+                ->orWhere('guru_pembimbing', 'ilike', '%' . $search . '%')
+                ->orWhere('materi_praktik', 'ilike', '%' . $search . '%');
             });
         }
 
-        $peminjaman = $query->get();
+        $peminjaman = $query->orderBy('created_at', 'desc')->get();
 
-        return view("home",compact("peminjaman"));
-    }
+        return view('home', compact('peminjaman', 'kelas'));
+    }   
+    
     public function create()
     {
         $kelas = Kelas::all(); 
@@ -32,21 +43,26 @@ class PeminjamanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
         // Validasi input
         $request->validate([
             'id_kelas' => 'required',
             'guru_pembimbing' => 'required|string',
             'materi_praktik' => 'required|string',
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
+            'jam_mulai' => 'required|date_format:H:i',
+            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
         ]);
 
         // Simpan data peminjaman
-        Peminjaman::create($request->all());
+        $peminjaman = Peminjaman::create($request->all());
 
-        return redirect('/')->with('success', 'Data Peminjaman Berhasil Ditambahkan!');
+        // Kembalikan respons JSON dengan data peminjaman
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Peminjaman Berhasil Ditambahkan!',
+            'data' => $peminjaman,
+        ]);
     }
+
 
     public function show($id_peminjaman){
         $barang = Barang::all();
