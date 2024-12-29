@@ -8,16 +8,13 @@ use App\Models\Kategori;
 
 class BarangController extends Controller
 {
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         $query = Barang::with('kategori');
-
-        // Filter berdasarkan kategori
+        
         if ($request->filled('id_kategori') && $request->id_kategori != 'all') {
             $query->where('id_kategori', $request->id_kategori);
         }
         
-        // Filter berdasarkan pencarian
         if ($request->filled('search')) {
             $query->where('nama_barang', 'like', '%' . $request->search . '%')
                   ->orWhereHas('kategori', function ($q) use ($request) {
@@ -26,13 +23,11 @@ class BarangController extends Controller
         }
         
         $barang = $query->orderBy('id_barang', 'asc')->get();
-        $kategori = Kategori::all();
-        
-        $jumlahBarang = $barang->count();
-        
-        return view('admin.management', compact('barang', 'jumlahBarang', 'kategori'));
-        
+        $kategori = Kategori::all();    
+    
+        return view('admin.management', compact('barang', 'kategori'));
     }
+
 
     
 
