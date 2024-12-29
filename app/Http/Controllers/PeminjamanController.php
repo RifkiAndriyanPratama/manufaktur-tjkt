@@ -48,12 +48,15 @@ class PeminjamanController extends Controller
             'id_kelas' => 'required',
             'guru_pembimbing' => 'required|string',
             'materi_praktik' => 'required|string',
-            'jam_mulai' => 'required|date_format:H:i',
-            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+            'jam_mulai' => 'required|integer|min:1|max:12',
+            'jam_selesai' => 'required|integer|min:1|max:12|gte:jam_mulai',
         ]);
 
         // Simpan data peminjaman
         $peminjaman = Peminjaman::create($request->all());
+
+        // Muat relasi 'kelas' agar bisa diakses di respons
+        $peminjaman->load('kelas');
 
         // Kembalikan respons JSON dengan data peminjaman
         return response()->json([

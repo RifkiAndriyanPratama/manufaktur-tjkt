@@ -17,8 +17,8 @@
 <nav class="bg-blue-700 p-6">
     <div class="container mx-auto flex justify-between items-center">
         <div class="flex items-center justify-start">
-            <h1 class="font-[Viga] text-2xl text-gray-200">PENGELOLAAN LOREM IPSUM</h1>
-         </div>
+            <a href="{{ Auth::check() ? route('admin.management') : route('login') }}" class="font-[Viga] text-3xl text-gray-200">LENDIFY</a>
+        </div>
          <div class="relative w-96">
                 <!-- Form untuk pencarian -->
                 <form id="searchForm">
@@ -67,13 +67,16 @@
 <main class="container mx-auto py-8">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <!-- Add Card -->
-        <a href="#" id="openModal">
+         <div id="AddCard">
+         <a href="#" id="openModal">
             <div class="bg-gray-100 shadow flex justify-center items-center w-full h-60 rounded-lg hover:bg-gray-200">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71 71" fill="none" class="w-16 h-16" style="color: #0E21A1;">
                 <path d="M65.9286 40.5714H40.5714V65.9286C40.5714 67.2736 40.0371 68.5635 39.086 69.5146C38.135 70.4657 36.845 71 35.5 71C34.155 71 32.865 70.4657 31.914 69.5146C30.9629 68.5635 30.4286 67.2736 30.4286 65.9286V40.5714H5.07143C3.7264 40.5714 2.43647 40.0371 1.48539 39.086C0.534311 38.135 0 36.845 0 35.5C0 34.155 0.534311 32.865 1.48539 31.914C2.43647 30.9629 3.7264 30.4286 5.07143 30.4286H30.4286V5.07143C30.4286 3.7264 30.9629 2.43646 31.914 1.48539C32.865 0.534308 34.155 0 35.5 0C36.845 0 38.135 0.534308 39.086 1.48539C40.0371 2.43646 40.5714 3.7264 40.5714 5.07143V30.4286H65.9286C67.2736 30.4286 68.5635 30.9629 69.5146 31.914C70.4657 32.865 71 34.155 71 35.5C71 36.845 70.4657 38.135 69.5146 39.086C68.5635 40.0371 67.2736 40.5714 65.9286 40.5714Z" fill="currentColor"/>
             </svg>
             </div>
         </a>
+         </div>
+        
 
         <!-- Dynamic Cards -->
         @foreach ($peminjaman as $p)
@@ -92,7 +95,7 @@
                     <div>
                         <p class="text-gray-700"><strong>Guru pembimbing:</strong> {{ $p->guru_pembimbing }}</p>
                         <p class="text-gray-700"><strong>Materi praktik:</strong> {{ $p->materi_praktik }}</p>
-                        <p class="text-gray-700"><strong>Jam ke:</strong> {{ $p->jam_mulai }} - {{ $p->jam_selesai }}</p>
+                        <p class="text-gray-700"><strong>Jam ke- :</strong> {{ $p->jam_mulai }} s/d {{ $p->jam_selesai }}</p>
                     </div>
                 </div>
             </a>
@@ -134,14 +137,14 @@
             <div class="flex items-center space-x-1">
                 <!-- Jam Mulai -->
                 <div class="relative">
-                    <input type="time" name="jam_mulai" id="jam_mulai" value="" class="border border-gray-300 rounded-md px-3 py-2 w-24 text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-100 hover:bg-blue-100">
+                    <input type="number" name="jam_mulai" id="jam_mulai" value="" class="border border-gray-300 rounded-md px-3 py-2 w-14 text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-100 hover:bg-blue-100">
                 </div>
 
                 <span class="text-gray-600 font-lg">Sampai</span>
 
                 <!-- Jam Selesai -->
                 <div class="relative">
-                    <input type="time" name="jam_selesai" id="jam_selesai" value="" class="border border-gray-300 rounded-md px-3 py-2 w-24 text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-100">
+                    <input type="number" name="jam_selesai" id="jam_selesai" value="" class="border border-gray-300 rounded-md px-3 py-2 w-14 text-center text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-100">
                 </div>
             </div>
 
@@ -169,8 +172,8 @@
 </script>
 
 <script>
-    // Display Toastr Notifications if they exist in the session
-    @if (session()->has('success'))
+     // Display Toastr Notifications if they exist in the session
+     @if (session()->has('success'))
         toastr.success("{{ session('success') }}");
     @elseif (session()->has('error'))
         toastr.error("{{ session('error') }}");
@@ -188,7 +191,8 @@
         modal.classList.remove('hidden');
     });
 
-    closeModal.addEventListener('click', function () {
+    closeModal.addEventListener('click', function (e) {
+        e.preventDefault();
         modal.classList.add('hidden');
     });
 
@@ -199,55 +203,64 @@
     });
 
     // Submit form with AJAX
-    $(document).ready(function () {
-        $('#modalForm').submit(function (e) {
-            e.preventDefault(); // Menghentikan pengiriman form biasa
+    $('#modalForm').submit(function (e) {
+        e.preventDefault(); // Hentikan pengiriman form biasa
 
-            var formData = $(this).serialize(); // Ambil data form
+        var formData = $(this).serialize(); // Ambil data form
 
-            $.ajax({
-                url: $(this).attr('action'), // URL route store
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    if (response.success) {
-                        // Tutup modal dan reset form
-                        $('#modal').addClass('hidden');
-                        toastr.success(response.message); // Tampilkan pesan sukses
+        $.ajax({
+            url: $(this).attr('action'), // URL route store
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    // Tutup modal dan reset form
+                    $('#modal').addClass('hidden');
+                    $('#modalForm')[0].reset();
 
-                        // Tambahkan data baru ke halaman
-                        var newCard = `
-                            <a href="/peminjaman/${response.data.id_peminjaman}">
-                                <div class="bg-gray-100 hover:bg-gray-200 shadow rounded-lg p-4 w-full h-60 flex flex-col justify-between">
-                                    <div>
-                                        <div class="flex items-center mb-4">
-                                            <div class="bg-gray-300 p-4 rounded-full">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17.25v1.5m0-12.75v9.75m4.5-1.5v3m0-6.75v3M9 7.5v2.25M3 3h18v18H3V3z" />
-                                                </svg>
-                                            </div>
+                    toastr.success(response.message); // Tampilkan pesan sukses
+
+                    // Tambahkan data baru ke halaman
+                    var newCard = `
+                        <a href="/peminjaman/${response.data.id_peminjaman}">
+                            <div class="bg-gray-100 hover:bg-gray-200 shadow rounded-lg p-4 w-full h-60 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center mb-4">
+                                        <div class="bg-gray-300 p-4 rounded-full">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17.25v1.5m0-12.75v9.75m4.5-1.5v3m0-6.75v3M9 7.5v2.25M3 3h18v18H3V3z" />
+                                            </svg>
                                         </div>
                                     </div>
-                                    <h3 class="text-2xl font-sm ml-4"><strong>${response.data.kelas.nama_kelas}</strong></h3>
-                                    <div>
-                                        <p class="text-gray-700"><strong>Guru pembimbing:</strong> ${response.data.guru_pembimbing}</p>
-                                        <p class="text-gray-700"><strong>Materi praktik:</strong> ${response.data.materi_praktik}</p>
-                                        <p class="text-gray-700"><strong>Jam ke:</strong> ${response.data.jam_mulai} - ${response.data.jam_selesai}</p>
-                                    </div>
                                 </div>
-                            </a>
-                        `;
-                        $('.grid').prepend(newCard); // Tambahkan kartu baru ke grid
-                    } else {
-                        toastr.error('Terjadi kesalahan!');
-                    }
-                },
-                error: function() {
-                    toastr.error('Terjadi kesalahan dalam mengirim data'); 
+                                <h3 class="text-2xl font-sm ml-4"><strong>${response.data.kelas.nama_kelas}</strong></h3>
+                                <div>
+                                    <p class="text-gray-700"><strong>Guru pembimbing:</strong> ${response.data.guru_pembimbing}</p>
+                                    <p class="text-gray-700"><strong>Materi praktik:</strong> ${response.data.materi_praktik}</p>
+                                    <p class="text-gray-700"><strong>Jam ke- :</strong> ${response.data.jam_mulai} s/d ${response.data.jam_selesai}</p>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                    // Tambahkan kartu baru setelah elemen "Add Card"
+                    $('#openModal').parent().after(newCard);
+                } else {
+                    toastr.error('Terjadi kesalahan!');
                 }
-            });
+            },
+            error: function(xhr) {
+                var errors = xhr.responseJSON.errors;
+                if (errors) {
+                    for (const key in errors) {
+                        toastr.error(errors[key][0]);
+                    }
+                } else {
+                    toastr.error('Terjadi kesalahan dalam mengirim data');
+                }
+            }
         });
     });
+    
     </script>
 
     <script>
