@@ -2,20 +2,26 @@
 <p>Kelas: {{ $peminjaman->kelas->nama_kelas }}</p>
 <p>Mapel: {{ $peminjaman->materi_praktik }}</p>
 <p>Jam: {{ $peminjaman->jam_mulai }} sampai {{ $peminjaman->jam_selesai }}</p>
-<table>
+
+<br>
+<br>
+<a href="{{ route('detail.create', $peminjaman->id_peminjaman) }}" class="btn btn-primary">Tambah Siswa</a>
+<table border="1">
     <thead>
         <tr>
             <th>Nama Siswa</th>
-            <th>Barang Dipinjam</th>
+            <th>Narang yang dipinjam</th>
             <th>Jumlah</th>
+            <th>Kelengkapan Pinjam</th>
         </tr>
     </thead>
     <tbody>
         @foreach($peminjaman->details as $detail)
         <tr>
-            <td>{{ $detail->nama_siswa }}</td>
-            <td>{{ $detail->barang_dipinjam }}</td>
-            <td>{{ $detail->jumlah }}</td>
+            <td>{{ $detail->nama_peminjam }}</td>
+            <td>{{ $detail->barang->nama_barang }}</td>
+            <td>{{ $detail->jumlah_pinjam }}</td>
+            <td>{{ $detail->kelengkapan_pinjam }}</td>
         </tr>
         @endforeach
     </tbody>

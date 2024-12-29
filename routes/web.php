@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KategoriController;
@@ -60,5 +61,8 @@ Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminj
 Route::get('/peminjaman/{id_peminjaman}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
 Route::post('/peminjaman/{id_peminjaman}/pengembalian', [PeminjamanController::class, 'pengembalian'])->name('peminjaman.pengembalian');
 Route::get('/peminjaman/export-pdf', [PeminjamanController::class, 'exportPdf'])->name('peminjaman.export-pdf');
+
+Route::get('/detail/create/{id_peminjaman}', [DetailController::class, 'create'])-> name('detail.create');
+Route::post('/detail/store', [DetailController::class, 'store'])->name('detail.store');
 
 require __DIR__.'/auth.php';

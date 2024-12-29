@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('detail', function (Blueprint $table) {
             $table->id('id_detail');
             $table->unsignedBigInteger('id_peminjaman');
+            $table->string('nama_peminjam');
             $table->unsignedBigInteger('id_barang');
             $table->integer('jumlah_pinjam');
             $table->string('kelengkapan_pinjam');
