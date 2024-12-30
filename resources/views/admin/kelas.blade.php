@@ -61,7 +61,7 @@
                     </tr>
 
                     <!-- Modal Edit -->
-                    <div id="editModal-{{ $item->id_kelas }}" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
+                    <div id="editModal-{{ $item->id_kelas }}" class="fixed z-20 inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
                         <div class="bg-white rounded-lg shadow-lg w-1/3">
                             <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-blue-800 items-center">
                                 <h2 class="text-xl font-bold text-white">Edit kelas</h2>
@@ -83,20 +83,20 @@
                     </div>
 
                     <!-- Modal Hapus -->
-                    <div id="deleteModal-{{ $item->id_kelas }}" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
+                    <div id="deleteModal-{{ $item->id_kelas }}" class="fixed z-20 inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
                         <div class="bg-white rounded-lg shadow-lg w-1/3">
-                            <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-blue-800 items-center">
+                            <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-red-600 items-center">
                                 <h2 class="text-xl text-white font-bold">Konfirmasi Hapus</h2>
                                 <button onclick="document.getElementById('deleteModal-{{ $item->id_kelas }}').classList.add('hidden')" class="text-white">&times;</button>
                             </div>
                             <div class="p-4">
                                 <p>Apakah Anda yakin ingin menghapus kelas ini?</p>
                                 <div class="flex justify-end mt-4">
-                                    <button onclick="document.getElementById('deleteModal-{{ $item->id_kelas }}').classList.add('hidden')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2">Batal</button>
+                                    <button onclick="document.getElementById('deleteModal-{{ $item->id_kelas }}').classList.add('hidden')" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded mr-2">Batal</button>
                                     <form action="{{ route('kelas.destroy', $item->id_kelas) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">Hapus</button>
+                                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Hapus</button>
                                     </form>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
     @endif
 
     <!-- Modal Tambah kelas -->
-    <div id="addModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
+    <div id="addModal" class="fixed z-20 inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg shadow-lg w-1/3">
             <div class="border-b px-4 py-2 flex justify-between rounded-t-lg bg-blue-800 items-center">
                 <h2 class="text-xl text-white font-bold">Tambah kelas</h2>

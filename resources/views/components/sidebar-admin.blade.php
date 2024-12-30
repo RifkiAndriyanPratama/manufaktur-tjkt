@@ -1,11 +1,12 @@
+<link href="https://fonts.googleapis.com/css2?family=Viga&display=swap" rel="stylesheet">
 <!-- sidebar -->
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-gray-200 border-r border-gray-200 sm:translate-x-0 z-20" aria-label="Sidebar">
+<aside id="logo-sidebar" class="fixed top-0 left-0 w-64 h-screen pt-14 transition-transform -translate-x-full bg-gray-200 border-r border-gray-200 sm:translate-x-0" aria-label="Sidebar">
    <div class="h-full px-0 pb-4 overflow-y-auto bg-gray-200">
       <!-- logo -->
       <div class="fixed px-3 top-3">
          <a href="https://flowbite.com" class="flex ms-2 md:me-24">
            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_the_NSDAP_%281920%E2%80%931945%2C_1-1%29.svg/600px-Flag_of_the_NSDAP_%281920%E2%80%931945%2C_1-1%29.svg.png" class="h-8 me-3" alt="FlowBite Logo" />
-           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">Admin Lendify</span>
+           <span class="self-center text-2xl whitespace-nowrap font-[Viga]">Admin Lendify</span>
          </a>
       </div>
    <div class="px-3">
@@ -71,17 +72,38 @@
             </a>
          </li>
       </div>
-         <div class="fixed bottom-4 left-4 w-full">
-         <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-               @csrf
-               <button type="submit" class="flex items-center p-2 text-gray-900 content-center rounded-lg hover:text-white text-gray-900 hover:bg-red-500 group transform transition duration-300 ease-in-out hover:scale-100 hover:translate-x-1">
-                  <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
-                  </svg>
-                  <span class="flex-shrink-0 ms-2 ml-4 text-base transition-opacity duration-300">Logout</span>
-               </button>
-            </form>
-        </div>
+      <div class="fixed bottom-4 left-4 w-full">
+          <button 
+              onclick="document.getElementById('logoutModal').classList.remove('hidden')" 
+              class="flex items-center p-2 text-gray-900 content-center rounded-lg hover:text-white text-gray-900 hover:bg-red-500 group transform transition duration-300 ease-in-out hover:scale-100 hover:translate-x-1">
+              <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
+              </svg>
+              <span class="flex-shrink-0 ms-2 ml-4 text-base transition-opacity duration-300">Logout</span>
+          </button>
+      </div>
       </ul>
    </div>
 </aside>
+<div id="logoutModal" class="fixed z-20 inset-0 bg-gray-800 bg-opacity-50 hidden flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg w-1/3">
+        <div class="border-b px-4 py-2 flex justify-between items-center rounded-t-lg bg-red-600">
+            <h2 class="text-xl text-white font-bold">Konfirmasi Logout</h2>
+            <button 
+                onclick="document.getElementById('logoutModal').classList.add('hidden')" 
+                class="text-white">&times;</button>
+        </div>
+        <div class="p-4">
+            <p>Apakah anda yakin?</p>
+            <div class="flex justify-end mt-4">
+                <button 
+                    onclick="document.getElementById('logoutModal').classList.add('hidden')" 
+                    class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded mr-2">Tidak</button>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded">Ya</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
