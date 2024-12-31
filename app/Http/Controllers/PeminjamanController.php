@@ -12,10 +12,8 @@ class PeminjamanController extends Controller
 {
     public function index(Request $request)
     {
-        // Query untuk mendapatkan semua data kelas
         $kelas = Kelas::all();
 
-        // Query untuk mendapatkan data peminjaman dengan atau tanpa search
         $query = Peminjaman::with('kelas');
 
         if ($request->has('search') && !empty($request->search)) {
@@ -43,7 +41,6 @@ class PeminjamanController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
             'id_kelas' => 'required',
             'guru_pembimbing' => 'required|string',
@@ -52,13 +49,10 @@ class PeminjamanController extends Controller
             'jam_selesai' => 'required|integer|min:1|max:12|gte:jam_mulai',
         ]);
 
-        // Simpan data peminjaman
         $peminjaman = Peminjaman::create($request->all());
 
-        // Muat relasi 'kelas' agar bisa diakses di respons
         $peminjaman->load('kelas');
 
-        // Kembalikan respons JSON dengan data peminjaman
         return response()->json([
             'success' => true,
             'message' => 'Data Peminjaman Berhasil Ditambahkan!',
@@ -82,12 +76,5 @@ class PeminjamanController extends Controller
         ]);
         return redirect('/');
     }
-
-    // public function exportPdf()
-    // {
-    //     $peminjaman = Peminjaman::with('details')->get();
-    //     $pdf = PDF::loadView('peminjaman.pdf', compact('peminjaman'));
-    //     return $pdf->download('riwayat_peminjaman.pdf');
-    // }
 }
 
