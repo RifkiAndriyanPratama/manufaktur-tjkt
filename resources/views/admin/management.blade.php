@@ -6,29 +6,20 @@
     <div class="flex justify-between items-center mb-4">
     <form action="{{ route('barang.index') }}" method="GET" class="flex items-center w-full max-w-lg">
         <!-- Dropdown Kategori -->
-        <select name="id_kategori" class="border border-gray-300 text-gray-500 text-center rounded-l-xl pr-8 py-2">
-            <option class="text-left" value="all" {{ request('id_kategori') == 'all' ? 'selected' : '' }}>All Kategory</option>
+        <select id="filterKategori" name="id_kategori" class="border border-gray-300 text-gray-500 text-center rounded-l-xl pr-8 py-2">
+            <option class="text-left" value="all">All Kategory</option>
             @foreach ($kategori as $k)
-                <option class="text-left" value="{{ $k->id_kategori }}" {{ request('id_kategori') == $k->id_kategori ? 'selected' : '' }}>
+                <option class="text-left" value="{{ $k->id_kategori }}">
                     {{ $k->nama_kategori }}
                 </option>
             @endforeach
         </select>
+        
 
         <!-- Input Pencarian -->
         <div class="relative flex-grow">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari barang..." class="border border-gray-300 rounded-r-xl px-4 py-2 w-full focus:outline-none">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari barang..." class="border border-gray-300 rounded-r-xl px-4 py-2 w-full focus:outline-none" id="search">
         </div>
-
-        <!-- Tombol Search -->
-        <button type="submit" class="ml-2 bg-blue-800 text-white px-4 py-2 rounded-lg flex items-center justify-center">    
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" class="w-6 h-6">
-                <circle cx="27" cy="27" r="16" stroke="currentColor" stroke-width="4" fill="none"></circle>
-                <rect x="38" y="38" width="8" height="20" rx="4" transform="rotate(45 38 38)" fill="currentColor"></rect>
-                <circle cx="22" cy="22" r="5" fill="white" opacity="0.5"></circle>
-                <line x1="20" y1="16" x2="24" y2="20" stroke="white" stroke-width="2" opacity="0.7"></line>
-            </svg>
-        </button>
 
     </form>
     
@@ -55,7 +46,7 @@
                         <th class="px-4 py-2 text-left">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="barangTable">
                     @foreach($barang as $index => $item)
                     <tr class="{{ $loop->odd ? 'bg-gray-200' : 'bg-gray-100' }} hover:bg-blue-200">
                         <td class="px-4 py-2">{{ $index + 1 }}</td>
@@ -167,5 +158,53 @@
         </div>
     </div>
 </div>
+<script>
+document.getElementById('filterKategori').addEventListener('change', function () {
+    updateBarangTable();
+});
 
+document.getElementById('search').addEventListener('input', function () {
+    updateBarangTable();
+});
+
+function updateBarangTable() {
+    const id_kategori = document.getElementById('filterKategori').value;
+    const search = document.getElementById('search').value;
+
+    // Kirim permintaan ke server dengan filter kategori dan pencarian
+    fetch(`/barang/search?id_kategori=${id_kategori}&search=${search}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    })
+        .then((response) => response.text())
+        .then((html) => {
+            // Perbarui tabel barang
+            document.getElementById('barangTable').innerHTML = html;
+        })
+        .catch((error) => console.error('Error:', error));
+}
+</script>
+<script type="text/javascript">
+    $('#search').on('keyup', function () {
+        $value = $(this).val();
+
+        $.ajax({
+            type: 'get',
+            url: '{{ route('barang.search') }}',
+            data: { 'search': $value },
+            success: function (data) {
+                $('tbody').html(data);
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'csrftoken': '{{ csrf_token() }}' 
+        }
+    });
+</script>
 </x-layout-admin>

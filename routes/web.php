@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kategori/{id_kategori}/edit', [KategoriController::class,'edit'])->name('kategori.edit');
     Route::put('/kategori/{id_kategori}', [KategoriController::class, 'update'])->name('kategori.update');
     Route::delete('/kategori/{id_kategori}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+    Route::get('/kategori/search', [KategoriController::class, 'search'])->name('kategori.search');
 
     // Route Barang
     Route::get('/barang', [BarangController::class, 'index' ])->name('barang.index');
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/barang/{id_barang}/edit', [BarangController::class,'edit'])->name('barang.edit');
     Route::put('/barang/{id_barang}', [BarangController::class, 'update'])->name('barang.update');
     Route::delete('/barang/{id_barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
+    Route::get('/barang/search', [BarangController::class, 'search'])->name('barang.search');
 
     // Route Kelas
     Route::get('/kelas', [KelasController::class, 'index' ])->name('kelas.index');
@@ -42,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kelas//{id_kelas}/edit', [KelasController::class,'edit'])->name('kelas.edit');
     Route::put('/kelas/{id_kelas}', [KelasController::class, 'update'])->name('kelas.update');
     Route::delete('/kelas/{id_kelas}', [KelasController::class, 'destroy'])->name('kelas.destroy');
+    Route::get('/kelas/search', [KelasController::class, 'search'])->name('kelas.search');
 
     // Route Siswa
     Route::get('/siswa', [SiswaController::class, 'index' ])->name('siswa.index');

@@ -7,7 +7,7 @@
         <!-- Form Pencarian -->
     <form action="{{ route('kategori.index') }}" method="GET" class="mb-4">
         <div class="relative">
-            <input type="text" name="search" value="{{ request('search') }}" class="w-full border border-gray-300 rounded-lg p-2 pl-10" placeholder="Cari kategori">
+            <input id="search" type="text" name="search" value="{{ request('search') }}" class="w-full border border-gray-300 rounded-lg p-2 pl-10" placeholder="Cari kategori">
             <svg class="absolute left-3 top-3 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m-6.65 2A7.5 7.5 0 1117 10a7.5 7.5 0 01-7.5 7.5z" />
             </svg>
@@ -128,4 +128,27 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('#search').on('keyup', function () {
+        $value = $(this).val();
+
+        $.ajax({
+            type: 'get',
+            url: '{{ route('kategori.search') }}',
+            data: { 'search': $value },
+            success: function (data) {
+                $('tbody').html(data);
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'csrftoken': '{{ csrf_token() }}' 
+        }
+    });
+</script>
 </x-layout-admin>
