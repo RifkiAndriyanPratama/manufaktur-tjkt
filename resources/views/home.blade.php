@@ -14,7 +14,7 @@
 <body class="font-sans">
 
 <!-- Navbar -->
-<nav class="fixed w-full bg-gradient-to-r from-blue-900 to-blue-500 p-6">
+<nav class="fixed w-full bg-gradient-to-r from-blue-900 to-blue-500 p-6 z-10">
     <div class="container mx-auto flex justify-between items-center">
         <div class="flex items-center justify-start">
             <a href="{{ Auth::check() ? route('admin.management') : route('login') }}" class="font-[Viga] text-3xl text-gray-200">LENDIFY</a>
@@ -37,7 +37,7 @@
 </nav>
 
 <!-- Section -->
-<section class="pt-24 bg-blue-200 py-8">
+<section class="pt-24 bg-gradient-to-r from-blue-50 to-blue-200 py-8">
     <div class="container mx-auto flex flex-col lg:flex-row items-center">
         <!-- Teks -->
         <div class="lg:w-1/2 mb-8 lg:mb-0">
@@ -79,27 +79,25 @@
         
 
         <!-- Dynamic Cards -->
-        @foreach ($peminjaman as $p)
-            <a href="{{ route('peminjaman.show', $p->id_peminjaman) }}">
-                <div class="bg-gray-100 hover:bg-gray-200 shadow rounded-lg p-4 w-full h-60 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center mb-4">
-                            <div class="bg-gray-300 p-4 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17.25v1.5m0-12.75v9.75m4.5-1.5v3m0-6.75v3M9 7.5v2.25M3 3h18v18H3V3z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-sm ml-4"><strong>{{ $p->kelas->nama_kelas }}</strong></h3>
-                    <div>
-                        <p class="text-gray-700"><strong>Guru pembimbing:</strong> {{ $p->guru_pembimbing }}</p>
-                        <p class="text-gray-700"><strong>Materi praktik:</strong> {{ $p->materi_praktik }}</p>
-                        <p class="text-gray-700"><strong>Jam ke- :</strong> {{ $p->jam_mulai }} s/d {{ $p->jam_selesai }}</p>
-                    </div>
-                </div>
-            </a>
-        @endforeach
+     @foreach ($peminjaman as $p)
+         <a href="{{ route('peminjaman.show', $p->id_peminjaman) }}" class="block w-full">
+          <div class="bg-gray-100 hover:bg-gray-200 shadow rounded-lg p-4 flex flex-col justify-between min-h-[240px]">
+              <div class="flex items-center mb-4">
+               <div class="p-4 rounded-full mx-2" style="background-color: #5867E8; transform: translateY(5px);">
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 3.51562C0 2.58322 0.370395 1.68901 1.0297 1.0297C1.68901 0.370395 2.58322 0 3.51562 0H21.4844C22.4168 0 23.311 0.370395 23.9703 1.0297C24.6296 1.68901 25 2.58322 25 3.51562V16.7969C25 17.7293 24.6296 18.6235 23.9703 19.2828C23.311 19.9421 22.4168 20.3125 21.4844 20.3125H16.6328C16.9379 21.3349 17.5353 22.2457 18.3516 22.9328C18.5352 23.0879 18.6667 23.2956 18.7282 23.5279C18.7898 23.7602 18.7784 24.0058 18.6957 24.2315C18.613 24.4571 18.4629 24.6519 18.2658 24.7893C18.0687 24.9268 17.8341 25.0003 17.5938 25H7.40625C7.16606 25 6.93167 24.9263 6.7348 24.7887C6.53793 24.6511 6.38809 24.4563 6.30557 24.2307C6.22305 24.0052 6.21184 23.7597 6.27344 23.5275C6.33505 23.2954 6.4665 23.0878 6.65 22.9328C7.46568 22.2455 8.06257 21.3347 8.36719 20.3125H3.51562C2.58322 20.3125 1.68901 19.9421 1.0297 19.2828C0.370395 18.6235 0 17.7293 0 16.7969V3.51562ZM2.34375 3.51562C2.34375 3.20482 2.46721 2.90675 2.68698 2.68698C2.90675 2.46721 3.20482 2.34375 3.51562 2.34375H21.4844C21.7952 2.34375 22.0932 2.46721 22.313 2.68698C22.5328 2.90675 22.6562 3.20482 22.6562 3.51562V15.2344C22.6562 15.5452 22.5328 15.8432 22.313 16.063C22.0932 16.2828 21.7952 16.4062 21.4844 16.4062H3.51562C3.20482 16.4062 2.90675 16.2828 2.68698 16.063C2.46721 15.8432 2.34375 15.5452 2.34375 15.2344V3.51562Z" fill="#EFF0F2"/>
+                </svg>
+               </div>
+              </div>
+              <h3 class="text-3xl font-bold ml-1 truncate">{{ $p->kelas->nama_kelas }}</h3>
+              <div class="flex flex-col space-y-1 text-sm">
+               <p class="text-gray-700 truncate"><strong>Guru pembimbing:</strong> {{ $p->guru_pembimbing }}</p>
+               <p class="text-gray-700 truncate"><strong>Materi praktik:</strong> {{ $p->materi_praktik }}</p>
+               <p class="text-gray-700 truncate"><strong>Jam ke- :</strong> {{ $p->jam_mulai }} s/d {{ $p->jam_selesai }}</p>
+              </div>
+          </div>
+         </a>
+     @endforeach
     </div>
 </main>
 
@@ -226,15 +224,15 @@
                             <div class="bg-gray-100 hover:bg-gray-200 shadow rounded-lg p-4 w-full h-60 flex flex-col justify-between">
                                 <div>
                                     <div class="flex items-center mb-4">
-                                        <div class="bg-gray-300 p-4 rounded-full">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17.25v1.5m0-12.75v9.75m4.5-1.5v3m0-6.75v3M9 7.5v2.25M3 3h18v18H3V3z" />
+                                        <div class="p-4 rounded-full mx-2" style="background-color: #5867E8; transform: translateY(5px);">
+                                            <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 3.51562C0 2.58322 0.370395 1.68901 1.0297 1.0297C1.68901 0.370395 2.58322 0 3.51562 0H21.4844C22.4168 0 23.311 0.370395 23.9703 1.0297C24.6296 1.68901 25 2.58322 25 3.51562V16.7969C25 17.7293 24.6296 18.6235 23.9703 19.2828C23.311 19.9421 22.4168 20.3125 21.4844 20.3125H16.6328C16.9379 21.3349 17.5353 22.2457 18.3516 22.9328C18.5352 23.0879 18.6667 23.2956 18.7282 23.5279C18.7898 23.7602 18.7784 24.0058 18.6957 24.2315C18.613 24.4571 18.4629 24.6519 18.2658 24.7893C18.0687 24.9268 17.8341 25.0003 17.5938 25H7.40625C7.16606 25 6.93167 24.9263 6.7348 24.7887C6.53793 24.6511 6.38809 24.4563 6.30557 24.2307C6.22305 24.0052 6.21184 23.7597 6.27344 23.5275C6.33505 23.2954 6.4665 23.0878 6.65 22.9328C7.46568 22.2455 8.06257 21.3347 8.36719 20.3125H3.51562C2.58322 20.3125 1.68901 19.9421 1.0297 19.2828C0.370395 18.6235 0 17.7293 0 16.7969V3.51562ZM2.34375 3.51562C2.34375 3.20482 2.46721 2.90675 2.68698 2.68698C2.90675 2.46721 3.20482 2.34375 3.51562 2.34375H21.4844C21.7952 2.34375 22.0932 2.46721 22.313 2.68698C22.5328 2.90675 22.6562 3.20482 22.6562 3.51562V15.2344C22.6562 15.5452 22.5328 15.8432 22.313 16.063C22.0932 16.2828 21.7952 16.4062 21.4844 16.4062H3.51562C3.20482 16.4062 2.90675 16.2828 2.68698 16.063C2.46721 15.8432 2.34375 15.5452 2.34375 15.2344V3.51562Z" fill="#EFF0F2"/>
                                             </svg>
                                         </div>
                                     </div>
                                 </div>
-                                <h3 class="text-2xl font-sm ml-4"><strong>${response.data.kelas.nama_kelas}</strong></h3>
-                                <div>
+                                <h3 class="text-3xl font-bold ml-1 truncate">${response.data.kelas.nama_kelas}</h3>
+                                <div class="flex flex-col space-y-1 text-sm">
                                     <p class="text-gray-700"><strong>Guru pembimbing:</strong> ${response.data.guru_pembimbing}</p>
                                     <p class="text-gray-700"><strong>Materi praktik:</strong> ${response.data.materi_praktik}</p>
                                     <p class="text-gray-700"><strong>Jam ke- :</strong> ${response.data.jam_mulai} s/d ${response.data.jam_selesai}</p>
