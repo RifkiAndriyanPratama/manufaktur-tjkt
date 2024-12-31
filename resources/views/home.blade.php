@@ -14,7 +14,7 @@
 <body class="font-sans">
 
 <!-- Navbar -->
-<nav class="bg-blue-700 p-6">
+<nav class="fixed w-full bg-gradient-to-r from-blue-900 to-blue-500 p-6">
     <div class="container mx-auto flex justify-between items-center">
         <div class="flex items-center justify-start">
             <a href="{{ Auth::check() ? route('admin.management') : route('login') }}" class="font-[Viga] text-3xl text-gray-200">LENDIFY</a>
@@ -37,7 +37,7 @@
 </nav>
 
 <!-- Section -->
-<section class="bg-blue-200 py-8">
+<section class="pt-24 bg-blue-200 py-8">
     <div class="container mx-auto flex flex-col lg:flex-row items-center">
         <!-- Teks -->
         <div class="lg:w-1/2 mb-8 lg:mb-0">

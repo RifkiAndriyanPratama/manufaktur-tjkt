@@ -4,9 +4,9 @@
    <div class="h-full px-0 pb-4 overflow-y-auto bg-gray-200">
       <!-- logo -->
       <div class="fixed px-3 top-3">
-         <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+         <a href="" class="flex ms-2 md:me-24">
            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_the_NSDAP_%281920%E2%80%931945%2C_1-1%29.svg/600px-Flag_of_the_NSDAP_%281920%E2%80%931945%2C_1-1%29.svg.png" class="h-8 me-3" alt="FlowBite Logo" />
-           <span class="self-center text-2xl whitespace-nowrap font-[Viga]">Admin Lendify</span>
+           <span class="self-center text-2xl whitespace-nowrap font-[Viga]">ADMIN LENDIFY</span>
          </a>
       </div>
    <div class="px-3">
@@ -17,9 +17,8 @@
          <li>
             <a href="{{ route('admin.management') }}" class="flex items-center pl-3 p-2 text-gray-900 rounded-r-lg hover:text-white hover:bg-blue-800 group relative transition-all duration-300 {{ Request::is('admin') ? 'bg-blue-800 text-white' : '' }}">
             <span class="absolute inset-y-0 left-0 w-1 bg-blue-800 rounded-r-lg transition-transform duration-300 transform -translate-x-full group-hover:translate-x-0 {{ Request::is('admin') ? 'translate-x-0' : '' }}"></span>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="gray" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect class="group-hover:stroke-white {{ Request::is('admin') ? 'stroke-white' : '' }}" x="1" y="1" width="22" height="22" rx="4" ry="4" stroke="gray" fill="none"></rect>
-                <path class="group-hover:stroke-white {{ Request::is('admin') ? 'stroke-white' : '' }}" d="M4 16 L8 12 L12 14 L16 10 L20 12" stroke="gray" fill="none"/>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                <path class="group-hover:fill-white {{ Request::is('admin') ? 'fill-white' : '' }}" d="M2.33333 21C1.69167 21 1.14236 20.7715 0.685417 20.3146C0.228472 19.8576 0 19.3083 0 18.6667V0H2.33333V18.6667H21V21H2.33333ZM3.5 17.5V7H8.16667V17.5H3.5ZM9.33333 17.5V1.16667H14V17.5H9.33333ZM15.1667 17.5V11.6667H19.8333V17.5H15.1667Z" fill="gray"/>
               </svg>
               <span class="flex-shrink-0 ml-4 text-base transition-opacity duration-300">Statistik</span>
             </a>
