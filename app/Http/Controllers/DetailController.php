@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\DetailPeminjaman;
 use Illuminate\Http\Request;
 use App\Models\Barang;
+use App\Models\Peminjaman;
+use App\Models\Kelas;
 
 class DetailController extends Controller
 {
+    public function riwayat()
+{
+    $detail = DetailPeminjaman::with(['peminjaman.kelas'])->get();
+
+    return view('admin.riwayat', compact('detail'));
+}
+
+
     public function create($id_peminjaman){
         $barang = Barang::all();
         return view("detail.create",compact("id_peminjaman", "barang"));

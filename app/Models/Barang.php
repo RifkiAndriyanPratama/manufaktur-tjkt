@@ -18,6 +18,6 @@ class Barang extends Model
 
     public function detail()
     {
-        return $this->hasMany(Detail::class, 'id_barang');
+        return $this->hasMany(DetailPeminjaman::class, 'id_barang');
     }
 }

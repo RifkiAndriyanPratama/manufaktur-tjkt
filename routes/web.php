@@ -53,6 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/siswa//{id_siswa}/edit', [SiswaController::class,'edit'])->name('siswa.edit');
     Route::put('/siswa/{id_siswa}', [SiswaController::class, 'update'])->name('siswa.update');
     Route::delete('/siswa/{id_siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+
+    // Route riwayat
+    Route::get('/riwayat', [DetailController::class, 'riwayat'])->name('peminjaman.riwayat');
 });
     
 // Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
