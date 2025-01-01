@@ -30,6 +30,7 @@
                 <thead>
                     <tr class="bg-gray-300">
                         <th class="border border-gray-300 px-4 py-2 text-left">Nama Siswa</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Kategori</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Barang yang Dipinjam</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Jumlah</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Kelengkapan Pinjam</th>
@@ -39,6 +40,7 @@
                     @foreach($peminjaman->details as $detail)
                     <tr class="bg-white hover:bg-gray-100 transition duration-150">
                         <td class="border border-gray-300 px-4 py-2">{{ $detail->nama_peminjam }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $detail->kategori->nama_kategori }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $detail->barang->nama_barang }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $detail->jumlah_pinjam }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $detail->kelengkapan_pinjam }}</td>
@@ -50,99 +52,80 @@
     </div>
 
     <!-- Modal -->
-<div id="modalForm" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 50;">
-    <div style="background-color: white; border-radius: 8px; width: 100%; max-width: 400px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-        <!-- Header -->
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding: 16px;">
-            <h2 style="font-size: 18px; font-weight: bold; margin: 0;">Lorem ipsum dolor</h2>
-            <button id="closeModal" style="background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
-        </div>
-        <!-- Tabs -->
-        <div style="padding: 16px; border-bottom: 1px solid #ddd;">
-            <ul style="display: flex; list-style: none; padding: 0; margin: 0;">
-                <li class="tab" style="margin-right: 16px; padding-bottom: 8px; cursor: pointer; border-bottom: 2px solid blue; color: blue;">Peminjaman</li>
-                <li class="tab" style="padding-bottom: 8px; cursor: pointer; color: gray;">Pengembalian</li>
-            </ul>
-        </div>
-        <!-- Form Content -->
-        <div style="padding: 16px;">
-            <form>
-                <!-- Kelas -->
-                <div style="margin-bottom: 16px;">
-                    <label style="display: block; font-size: 14px; font-weight: bold;">Kelas</label>
-                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                        <option>Pilih kelas</option>
-                        <option>XII TJK B</option>
-                    </select>
-                </div>
-                <!-- Nama -->
-                <div style="margin-bottom: 16px;">
-                    <label style="display: block; font-size: 14px; font-weight: bold;">Nama</label>
-                    <input type="text" placeholder="Masukkan Nama" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                </div>
-                <!-- Kategori -->
-                <div style="margin-bottom: 16px;">
-                    <label style="display: block; font-size: 14px; font-weight: bold;">Kategori</label>
-                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                        <option>Pilih kategori</option>
-                        <option>Laptop</option>
-                    </select>
-                </div>
-                <!-- Merk -->
-                <div style="margin-bottom: 16px;">
-                    <label style="display: block; font-size: 14px; font-weight: bold;">Merk</label>
-                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                        <option>Pilih merk</option>
-                        <option>Asus</option>
-                    </select>
-                </div>
-                <!-- Nama Barang -->
-                <div style="margin-bottom: 16px;">
-                    <label style="display: block; font-size: 14px; font-weight: bold;">Nama barang</label>
-                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                        <option>Pilih barang</option>
-                        <option>Asus ROG STRIX SCAR 18</option>
-                    </select>
-                </div>
-                <!-- Jumlah -->
-                <div style="margin-bottom: 16px;">
-                    <label style="display: block; font-size: 14px; font-weight: bold;">Jumlah</label>
-                    <div style="display: flex; align-items: center;">
-                        <button type="button" style="padding: 8px; background-color: #ddd; border: none; border-radius: 4px;">-</button>
-                        <input type="number" value="1" readonly style="width: 60px; text-align: center; border: 1px solid #ddd; margin: 0 8px; border-radius: 4px;">
-                        <button type="button" style="padding: 8px; background-color: #ddd; border: none; border-radius: 4px;">+</button>
+    <div id="modalForm" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
+            <!-- Header -->
+            <div class="flex justify-between items-center border-b p-4">
+                <h2 class="text-lg font-semibold">Tambah Detail Peminjaman</h2>
+                <button id="closeModal" class="text-gray-600 hover:text-gray-900">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- Form Content -->
+            <div class="p-6">
+                <form id="modalForm" action="{{ route('detail.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="id_peminjaman" value="{{ $peminjaman->id_peminjaman }}">
+                    <!-- Kelas -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Kelas</label>
+                        <input type="text" value="{{ $peminjaman->kelas->nama_kelas }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" readonly>
+                        <input type="hidden" name="id_kelas" value="{{ $peminjaman->kelas->id_kelas }}">
                     </div>
-                </div>
-                <!-- Kelengkapan -->
-                <div style="margin-bottom: 16px;">
-                    <span style="display: block; font-size: 14px; font-weight: bold;">Kelengkapan</span>
-                    <div>
-                        <label>
-                            <input type="radio" name="kelengkapan" value="lengkap"> Lengkap
-                        </label>
-                        <label style="margin-left: 16px;">
-                            <input type="radio" name="kelengkapan" value="tidak"> Tidak
-                        </label>
+                    <!-- Nama -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Nama</label>
+                        <input type="text" name="nama_peminjam" placeholder="Masukkan Nama" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2" required>
                     </div>
-                </div>
-                <!-- Keterangan -->
-                <div style="margin-bottom: 16px;">
-                    <label style="display: block; font-size: 14px; font-weight: bold;">Keterangan</label>
-                    <textarea style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;" rows="3"></textarea>
-                </div>
-                <!-- Submit Button -->
-                <button type="submit" style="width: 100%; padding: 8px; background-color: blue; color: white; border: none; border-radius: 4px; font-weight: bold;">Simpan</button>
-            </form>
+                    <!-- Kategori -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Kategori</label>
+                        <select name="id_kategori" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                            <option value="" disabled selected>Pilih kategori</option>
+                            @foreach($kategori as $k)
+                                <option value="{{ $k->id_kategori }}">{{ $k->nama_kategori }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Barang -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Barang</label>
+                        <select name="id_barang" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                            <option value="" disabled selected>Pilih barang</option>
+                            @foreach($barang as $b)
+                                <option value="{{ $b->id_barang }}">{{ $b->nama_barang }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Jumlah -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Jumlah</label>
+                        <input type="number" name="jumlah_pinjam" min="1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                    </div>
+                    <!-- Kelengkapan -->
+                    <div class="mb-4">
+                        <span class="block text-sm font-medium text-gray-700">Kelengkapan</span>
+                        <div class="flex items-center">
+                            <label class="mr-4">
+                                <input type="radio" name="kelengkapan_pinjam" value="lengkap" required> Lengkap
+                            </label>
+                            <label>
+                                <input type="radio" name="kelengkapan_pinjam" value="tidak" required> Tidak
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full bg-blue-600 text-white rounded-md py-2">Simpan</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-
 
     <!-- Script for Modal -->
     <script>
         const openMainModal = document.getElementById('openMainModal');
-        const closeMainModal = document.getElementById('closeMainModal');
-        const mainModal = document.getElementById('mainModal');
+        const closeMainModal = document.getElementById('closeModal');
+        const mainModal = document.getElementById('modalForm');
 
         // Open modal
         openMainModal.addEventListener('click', (e) => {
@@ -165,8 +148,7 @@
 </body>
 
 </html>
-
-
+        
 
 
 

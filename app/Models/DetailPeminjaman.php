@@ -12,6 +12,7 @@ class DetailPeminjaman extends Model
     protected $fillable = [
         'id_peminjaman',
         'nama_peminjam',
+        'id_kategori',
         'id_barang',
         'jumlah_pinjam',
         'kelengkapan_pinjam',
@@ -27,5 +28,9 @@ class DetailPeminjaman extends Model
     {
         return $this->belongsTo(Barang::class, 'id_barang');
     }
-}
 
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
+}

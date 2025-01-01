@@ -15,4 +15,9 @@ class Kategori extends Model
     {
         return $this->hasMany(Barang::class, 'id_kategori');
     }
+
+    public function peminjaman()
+    {
+        return $this->hasMany(DetailPeminjaman::class, 'id_kategori');
+    }
 }

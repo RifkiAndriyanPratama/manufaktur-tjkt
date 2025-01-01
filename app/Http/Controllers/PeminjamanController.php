@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use App\Models\Peminjaman;
 use App\Models\Barang;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 
@@ -12,8 +13,10 @@ class PeminjamanController extends Controller
 {
     public function index(Request $request)
     {
+        
         $kelas = Kelas::all();
 
+        
         $query = Peminjaman::with('kelas');
 
         if ($request->has('search') && !empty($request->search)) {
@@ -41,6 +44,7 @@ class PeminjamanController extends Controller
 
     public function store(Request $request)
     {
+        
         $request->validate([
             'id_kelas' => 'required',
             'guru_pembimbing' => 'required|string',
@@ -49,10 +53,13 @@ class PeminjamanController extends Controller
             'jam_selesai' => 'required|integer|min:1|max:12|gte:jam_mulai',
         ]);
 
+        
         $peminjaman = Peminjaman::create($request->all());
 
+        
         $peminjaman->load('kelas');
 
+       
         return response()->json([
             'success' => true,
             'message' => 'Data Peminjaman Berhasil Ditambahkan!',
@@ -63,8 +70,9 @@ class PeminjamanController extends Controller
 
     public function show($id_peminjaman){
         $barang = Barang::all();
+        $kategori = Kategori::all();
         $peminjaman = Peminjaman::with('details')->findOrFail($id_peminjaman);
-        return view('peminjaman.show', compact('peminjaman', 'barang'));
+        return view('peminjaman.show', compact('peminjaman', 'barang', 'kategori'));
     }
 
     public function pengembalian(Request $request, $id_peminjaman)
@@ -76,5 +84,5 @@ class PeminjamanController extends Controller
         ]);
         return redirect('/');
     }
-}
 
+}

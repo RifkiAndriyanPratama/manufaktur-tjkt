@@ -22,9 +22,9 @@
          <div class="relative w-96">
                 <!-- Form untuk pencarian -->
                 <form id="searchForm">
-                    <input type="text" id="searchInput" name="search" value="{{ request('search') }}" placeholder="Cari..." 
+                    <input type="text" id="searchInput" name="search" value="{{ request('#') }}" placeholder="Cari..." 
                         class="w-full py-2 pl-4 pr-10 text-white bg-blue-800 rounded-full focus:outline-none placeholder-white" 
-                        value="{{ request('search') }}">
+                        value="{{ request('#') }}">
                     <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                         <button type="submit" class="text-white">
                             <i class="fas fa-search"></i>
@@ -273,10 +273,10 @@
     //     event.target.value = ''; // Kosongkan input pencarian ketika kolom teks diklik
     // });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var searchInput = document.getElementById('searchInput');
-        searchInput.value = ''; // Kosongkan input pencarian setelah halaman di refresh
-    });
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var searchInput = document.getElementById('searchInput');
+    //     searchInput.value = ''; // Kosongkan input pencarian setelah halaman di refresh
+    // });
     </script>
 
 </body>
