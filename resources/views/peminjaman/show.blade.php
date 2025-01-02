@@ -63,24 +63,24 @@
             </div>
             <!-- Form Content -->
             <div class="p-6">
-                <form id="modalForm" action="{{ route('detail.store') }}" method="POST" class="space-y-4">
+                <form id="modalForm" action="{{ route('detail.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id_peminjaman" value="{{ $peminjaman->id_peminjaman }}">
                     <!-- Kelas -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Kelas</label>
-                        <input type="text" value="{{ $peminjaman->kelas->nama_kelas }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" readonly>
+                        <label class="block text-sm font-medium text-gray-700 ">Kelas</label>
+                        <input type="text" value="{{ $peminjaman->kelas->nama_kelas }}" class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" readonly>
                         <input type="hidden" name="id_kelas" value="{{ $peminjaman->kelas->id_kelas }}">
                     </div>
                     <!-- Nama -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Nama</label>
-                        <input type="text" name="nama_peminjam" placeholder="Masukkan Nama" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2" required>
+                        <input type="text" name="nama_peminjam" placeholder="Masukkan Nama" class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" required>
                     </div>
                     <!-- Kategori -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Kategori</label>
-                        <select name="id_kategori" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        <select name="id_kategori" class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" required>
                             <option value="" disabled selected>Pilih kategori</option>
                             @foreach($kategori as $k)
                                 <option value="{{ $k->id_kategori }}">{{ $k->nama_kategori }}</option>
@@ -90,7 +90,7 @@
                     <!-- Barang -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Barang</label>
-                        <select name="id_barang" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        <select name="id_barang" class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" required>
                             <option value="" disabled selected>Pilih barang</option>
                             @foreach($barang as $b)
                                 <option value="{{ $b->id_barang }}">{{ $b->nama_barang }}</option>

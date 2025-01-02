@@ -19,16 +19,16 @@ class PeminjamanController extends Controller
         
         $query = Peminjaman::with('kelas');
 
-        if ($request->has('search') && !empty($request->search)) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->whereHas('kelas', function ($q) use ($search) {
-                    $q->where('nama_kelas', 'ilike', '%' . $search . '%');
-                })
-                ->orWhere('guru_pembimbing', 'ilike', '%' . $search . '%')
-                ->orWhere('materi_praktik', 'ilike', '%' . $search . '%');
-            });
-        }
+        // if ($request->has('search') && !empty($request->search)) {
+        //     $search = $request->search;
+        //     $query->where(function ($q) use ($search) {
+        //         $q->whereHas('kelas', function ($q) use ($search) {
+        //             $q->where('nama_kelas', 'ilike', '%' . $search . '%');
+        //         })
+        //         ->orWhere('guru_pembimbing', 'ilike', '%' . $search . '%')
+        //         ->orWhere('materi_praktik', 'ilike', '%' . $search . '%');
+        //     });
+        // }
 
         $peminjaman = $query->orderBy('created_at', 'desc')->get();
 
