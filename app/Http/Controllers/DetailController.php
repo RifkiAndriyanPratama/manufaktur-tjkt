@@ -20,7 +20,7 @@ class DetailController extends Controller
 
     public function create($id_peminjaman)
     {
-        $barang = Barang::all(); 
+        $barang = Barang::all()->groupBy('id_kategori'); 
         $kategori = Kategori::all();
         return view("detail.create", compact("id_peminjaman", "barang", "kategori"));
     }

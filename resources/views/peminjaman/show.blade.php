@@ -10,8 +10,16 @@
 </head>
 
 <body class="bg-gray-100 h-screen flex flex-col p-6">
+    <div>
+        <a href="{{ url()->previous() }}" class="text-gray-700 hover:text-gray-900 transition duration-200 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+            </svg>
+        </a>
+    </div>
     <h1 class="text-3xl font-semibold text-gray-800 mb-4">Detail Peminjaman</h1>
     <div class="bg-gray-200 rounded-lg p-4 mb-4">
+        <p class="text-gray-700">Kelas: <span class="font-bold">slot nama guru</span></p>
         <p class="text-gray-700">Kelas: <span class="font-bold">{{ $peminjaman->kelas->nama_kelas }}</span></p>
         <p class="text-gray-700">Materi: <span class="font-bold">{{ $peminjaman->materi_praktik }}</span></p>
         <p class="text-gray-700">Jam: <span class="font-bold">{{ $peminjaman->jam_mulai }} sampai {{ $peminjaman->jam_selesai }}</span></p>
@@ -80,7 +88,7 @@
                     <!-- Kategori -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Kategori</label>
-                        <select name="id_kategori" class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" required>
+                        <select name="id_kategori" id="kategori" class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" required>
                             <option value="" disabled selected>Pilih kategori</option>
                             @foreach($kategori as $k)
                                 <option value="{{ $k->id_kategori }}">{{ $k->nama_kategori }}</option>
@@ -90,18 +98,23 @@
                     <!-- Barang -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Barang</label>
-                        <select name="id_barang" class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" required>
+                        <select name="id_barang" id="barang" class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" required>
                             <option value="" disabled selected>Pilih barang</option>
                             @foreach($barang as $b)
-                                <option value="{{ $b->id_barang }}">{{ $b->nama_barang }}</option>
+                                <option value="{{ $b->id_barang }}" data-kategori="{{ $b->id_kategori }}">{{ $b->nama_barang }}</option>
                             @endforeach
                         </select>
                     </div>
                     <!-- Jumlah -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Jumlah</label>
-                        <input type="number" name="jumlah_pinjam" min="1" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        <div class="flex items-center">
+                            <button type="button" id="decrement" class="bg-gray-300 text-gray-700 px-2 py-1 rounded-l">-</button>
+                            <input type="text" inputmode="numeric" name="jumlah_pinjam" id="jumlah_pinjam" min="1" value="1" class="text-center w-16 border-gray-300 rounded-none shadow-sm" required>
+                            <button type="button" id="increment" class="bg-gray-300 text-gray-700 px-2 py-1 rounded-r">+</button>
+                        </div>
                     </div>
+
                     <!-- Kelengkapan -->
                     <div class="mb-4">
                         <span class="block text-sm font-medium text-gray-700">Kelengkapan</span>
@@ -110,12 +123,13 @@
                                 <input type="radio" name="kelengkapan_pinjam" value="lengkap" required> Lengkap
                             </label>
                             <label>
-                                <input type="radio" name="kelengkapan_pinjam" value="tidak" required> Tidak
+                                <input type="radio" name="kelengkapan_pinjam" value="tidak lengkap" required> Tidak Lengkap
                             </label>
                         </div>
                     </div>
-                    <!-- Submit Button -->
-                    <button type="submit" class="w-full bg-blue-600 text-white rounded-md py-2">Simpan</button>
+                    <div class="flex justify-end mt-4">
+                        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Simpan</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -143,6 +157,38 @@
             if (e.target === mainModal) {
                 mainModal.classList.add('hidden');
             }
+        });
+    </script>
+
+    <script>
+        document.getElementById('kategori').addEventListener('change', function() {
+            var kategoriId = this.value;
+            var barangOptions = document.getElementById('barang').options;
+            
+            for (var i = 0; i < barangOptions.length; i++) {
+                var option = barangOptions[i];
+                if (option.getAttribute('data-kategori') == kategoriId || option.value == "") {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+    <script>
+        document.getElementById('decrement').addEventListener('click', function() {
+            var jumlahInput = document.getElementById('jumlah_pinjam');
+            var currentValue = parseInt(jumlahInput.value);
+            if (currentValue > 1) {
+                jumlahInput.value = currentValue - 1;
+            }
+        });
+
+        document.getElementById('increment').addEventListener('click', function() {
+            var jumlahInput = document.getElementById('jumlah_pinjam');
+            var currentValue = parseInt(jumlahInput.value);
+            jumlahInput.value = currentValue + 1;
         });
     </script>
 </body>
