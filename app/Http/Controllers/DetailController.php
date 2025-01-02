@@ -6,7 +6,8 @@ use App\Models\DetailPeminjaman;
 use Illuminate\Http\Request;
 use App\Models\Barang;
 use App\Models\Peminjaman;
-use App\Models\Kategori; // Import the Kategori model
+use App\Models\Kategori;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DetailController extends Controller
 {
@@ -19,8 +20,8 @@ class DetailController extends Controller
 
     public function create($id_peminjaman)
     {
-        $barang = Barang::all(); // Data barang
-        $kategori = Kategori::all(); // Data kategori
+        $barang = Barang::all(); 
+        $kategori = Kategori::all();
         return view("detail.create", compact("id_peminjaman", "barang", "kategori"));
     }
 
@@ -39,9 +40,12 @@ class DetailController extends Controller
 
         return redirect()->route('peminjaman.show', $validated['id_peminjaman'])->with('success', 'Data Peminjaman Berhasil Ditambahkan!');
     }
-    public function pdf(){
-        $detail = DetailPeminjaman::with(['peminjaman.kelas'])->get();
+    public function exportPdf()
+    {
+        $detail = DetailPeminjaman::with(['peminjaman.kelas', 'barang'])->get();
 
-        return view('pdf.templatepdf', compact('detail'));
+        $pdf = Pdf::loadView('pdf', compact('detail'));
+
+        return $pdf->download('riwayat_peminjaman.pdf');
     }
 }

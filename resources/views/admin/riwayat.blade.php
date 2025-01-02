@@ -1,7 +1,9 @@
 <x-layout-admin>
     <div class="container mx-auto py-0">
     <h1 class="text-2xl font-bold mb-4">Riwayat Peminjaman</h1>
-
+    <div class="py-4">
+        <a href="{{ route("exportPdf") }}" class="p-2 bg-red-600 rounded-lg text-white">Download PDF</a>
+    </div>
     <!-- Tabel Riwayat -->
     @if($detail->isEmpty())
         <p class="text-center">Tidak ada peminjaman.</p>
