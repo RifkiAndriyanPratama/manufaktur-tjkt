@@ -46,5 +46,67 @@
         </div>
     </div>
 </div>
+<!-- line chart -->
+<div class="absoluted mt-10 bg-gray-100 w-full h-screen  items-center justify-center rounded-lg shadow-md">
+        <canvas id="lineChart" class="w-full"></canvas>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni'],
+            datasets: [
+                {
+                    label: 'Kelas',
+                    data: [10, 20, 30, 40, 50, 60], // Data dummy
+                    borderColor: '#4A90E2',
+                    backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                    fill: true,
+                },
+                {
+                    label: 'Detail Peminjam',
+                    data: [15, 25, 35, 45, 55, 65],
+                    borderColor: '#50E3C2',
+                    backgroundColor: 'rgba(80, 227, 194, 0.2)',
+                    fill: true,
+                },
+                {
+                    label: 'Kategori',
+                    data: [20, 30, 40, 50, 60, 70],
+                    borderColor: '#F5A623',
+                    backgroundColor: 'rgba(245, 166, 35, 0.2)',
+                    fill: true,
+                },
+                {
+                    label: 'Jumlah Kelas',
+                    data: [25, 35, 45, 55, 65, 75],
+                    borderColor: '#D0021B',
+                    backgroundColor: 'rgba(208, 2, 27, 0.2)',
+                    fill: true,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                    },
+                },
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+</script>
 </x-layout-admin>
