@@ -71,4 +71,7 @@ Route::get('/peminjaman/export-pdf', [PeminjamanController::class, 'exportPdf'])
 Route::get('/detail/create/{id_peminjaman}', [DetailController::class, 'create'])-> name('detail.create');
 Route::post('/detail/store', [DetailController::class, 'store'])->name('detail.store');
 
+// pdf
+Route::get('/pdf' , [DetailController::class, 'pdf'])->name('pdf');
+
 require __DIR__.'/auth.php';

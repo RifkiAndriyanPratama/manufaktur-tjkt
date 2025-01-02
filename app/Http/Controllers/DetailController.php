@@ -39,4 +39,9 @@ class DetailController extends Controller
 
         return redirect()->route('peminjaman.show', $validated['id_peminjaman'])->with('success', 'Data Peminjaman Berhasil Ditambahkan!');
     }
+    public function pdf(){
+        $detail = DetailPeminjaman::with(['peminjaman.kelas'])->get();
+
+        return view('pdf.templatepdf', compact('detail'));
+    }
 }
