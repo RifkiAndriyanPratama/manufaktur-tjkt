@@ -1,11 +1,17 @@
 <x-layout-admin>
     <div class="container mx-auto py-0">
     <h1 class="text-2xl font-bold mb-4">Riwayat Peminjaman</h1>
-    <div class="py-4">
-        <a href="{{ route("exportPdf") }}" class="p-2 bg-red-600 rounded-lg text-white">Download PDF</a>
-    </div>
-    <div class="py-4">
-        <a href="{{ route("excel") }}" class="p-2 bg-green-600 rounded-lg text-white">Download Excel</a>
+    <div>
+        <div>
+            <div class="flex justify-end gap-2">
+                <div class="py-4">
+                    <a href="{{ route("exportPdf") }}" class="p-2 bg-red-600 rounded-lg text-white">Download PDF</a>
+                </div>
+                <div class="py-4">
+                    <a href="{{ route("excel") }}" class="p-2 bg-green-600 rounded-lg text-white">Download Excel</a>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Tabel Riwayat -->
     @if($detail->isEmpty())
