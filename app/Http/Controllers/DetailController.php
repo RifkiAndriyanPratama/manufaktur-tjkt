@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RiwayatExport;
 use App\Models\DetailPeminjaman;
 use Illuminate\Http\Request;
 use App\Models\Barang;
 use App\Models\Peminjaman;
 use App\Models\Kategori;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DetailController extends Controller
 {
@@ -47,5 +49,9 @@ class DetailController extends Controller
         $pdf = Pdf::loadView('pdf', compact('detail'));
 
         return $pdf->download('riwayat_peminjaman.pdf');
+    }
+    public function excel()
+    {
+        return Excel::download(new RiwayatExport, 'riwayat-peminjaman-barang.xlsx');
     }
 }

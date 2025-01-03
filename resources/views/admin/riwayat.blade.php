@@ -4,6 +4,9 @@
     <div class="py-4">
         <a href="{{ route("exportPdf") }}" class="p-2 bg-red-600 rounded-lg text-white">Download PDF</a>
     </div>
+    <div class="py-4">
+        <a href="{{ route("excel") }}" class="p-2 bg-green-600 rounded-lg text-white">Download Excel</a>
+    </div>
     <!-- Tabel Riwayat -->
     @if($detail->isEmpty())
         <p class="text-center">Tidak ada peminjaman.</p>

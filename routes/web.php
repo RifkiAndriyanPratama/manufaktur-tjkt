@@ -66,4 +66,6 @@ Route::post('/detail/store', [DetailController::class, 'store'])->name('detail.s
 // pdf
 Route::get('/export-pdf' , [DetailController::class, 'exportPdf'])->name('exportPdf');
 
+// excel
+Route::get('/excel' , [DetailController::class, 'excel'])->name('excel');
 require __DIR__.'/auth.php';
