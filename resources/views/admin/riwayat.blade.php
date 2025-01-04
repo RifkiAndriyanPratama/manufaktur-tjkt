@@ -4,9 +4,31 @@
     <div>
         <div>
             <div class="flex justify-end gap-2">
-                <div class="py-4">
-                    <input type="month" name="filter_date" id="filter_date" class="border border-blue-500 rounded p-2 w-36 text-center"  value="{{ request('filter_date') ? request('filter_date') : now()->format('Y-m') }}"/>
-                </div>
+                <form method="GET" action="{{ route('peminjaman.riwayat') }}" class="flex items-center gap-4">
+                    <select name="bulan" class="border rounded p-2">
+                        <option value="">Pilih Bulan</option>
+                        @php
+                        $bulanIndo = [
+                            1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                        ];
+                        @endphp
+                        @foreach ($bulanIndo as $index => $namaBulan)
+                            <option value="{{ $index }}" {{ request('bulan') == $index ? 'selected' : '' }}>
+                                {{ $namaBulan }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <select name="tahun" class="border rounded p-2">
+                        <option value="">Pilih Tahun</option>
+                        @foreach (range(date('Y') - 5, date('Y')) as $year)
+                            <option value="{{ $year }}" {{ request('tahun') == $year ? 'selected' : '' }}>
+                                {{ $year }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="p-2 bg-blue-500 text-white rounded">Filter</button>
+                </form>
                 <div class="py-4">
                     <a href="{{ route('exportPdf', ['bulan' => request('bulan'), 'tahun' => request('tahun')]) }}" class="p-2 bg-red-600 rounded-lg text-white flex items-center gap-2">
                         <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,11 +51,9 @@
     </div>
     <!-- Tabel Riwayat -->
     @if($detail->isEmpty())
-    <tr>
-        <td colspan="7" class="text-center py-2">Tidak ada peminjaman.</td>
-    </tr>
+        <p class="text-center">Tidak ada peminjaman.</p>
     @else
-    <div class="overflow-x-auto rounded-xl">
+        <div class="overflow-x-auto rounded-xl">
             <table class="min-w-full bg-white rounded-xl">
                 <thead class="bg-blue-800 text-white border rounded-xl">
                     <tr>
@@ -48,65 +68,19 @@
                 </thead>
                 <tbody id="barangTable">
                     @foreach($detail as $index => $item)
-                        <tr class="{{ $loop->odd ? 'bg-gray-200' : 'bg-gray-100' }} hover:bg-blue-200">
-                            <td class="px-4 py-2">{{ $index + 1 }}</td>
-                            <td class="px-4 py-2">{{ $item->nama_peminjam }}</td>
-                            <td class="px-4 py-2">{{ $item->peminjaman->kelas->nama_kelas ?? 'N/A' }}</td>
-                            <td class="px-4 py-2">{{ $item->barang->nama_barang ?? 'N/A' }}</td>
-                            <td class="px-4 py-2">{{ $item->jumlah_pinjam }}</td>
-                            <td class="px-4 py-2">{{ $item->kelengkapan_pinjam }}</td>
-                            <td class="px-4 py-2">{{ $item->kelengkapan_kembali }}</td>
-                        </tr>
+                    <tr class="{{ $loop->odd ? 'bg-gray-200' : 'bg-gray-100' }} hover:bg-blue-200">
+                        <td class="px-4 py-2">{{ $index + 1 }}</td>
+                        <td class="px-4 py-2">{{ $item->nama_peminjam }}</td>
+                        <td class="px-4 py-2">{{ $item->peminjaman->kelas->nama_kelas }}</td>
+                        <td class="px-4 py-2">{{ $item->barang->nama_barang }}</td>
+                        <td class="px-4 py-2">{{ $item->jumlah_pinjam }}</td>
+                        <td class="px-4 py-2">{{ $item->kelengkapan_pinjam }}</td>
+                        <td class="px-4 py-2">{{ $item->kelengkapan_kembali }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     @endif
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const filterForm = document.getElementById('filterForm');
-        const filterDate = document.getElementById('filter_date');
-        const barangTable = document.getElementById('barangTable');
-        const updateTable = (data) => {
-            barangTable.innerHTML = '';
-            if (data.length === 0) {
-                barangTable.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="text-center py-4">Tidak ada peminjaman.</td>
-                    </tr>
-                `;
-                return;
-            }
-            data.forEach((item, index) => {
-                barangTable.innerHTML += `
-                    <tr class="${index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-100'} hover:bg-blue-200">
-                        <td class="px-4 py-2">${index + 1}</td>
-                        <td class="px-4 py-2">${item.nama_peminjam}</td>
-                        <td class="px-4 py-2">${item.peminjaman?.kelas?.nama_kelas ?? 'N/A'}</td>
-                        <td class="px-4 py-2">${item.barang?.nama_barang ?? 'N/A'}</td>
-                        <td class="px-4 py-2">${item.jumlah_pinjam}</td>
-                        <td class="px-4 py-2">${item.kelengkapan_pinjam}</td>
-                        <td class="px-4 py-2">${item.kelengkapan_kembali}</td>
-                    </tr>
-                `;
-            });
-        };
-        filterDate.addEventListener('change', function () {
-            const filterDateValue = filterDate.value;
-            fetch(`{{ route('peminjaman.riwayat') }}?filter_date=${filterDateValue}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                updateTable(data.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-    });
-</script>
 </x-layout-admin>
