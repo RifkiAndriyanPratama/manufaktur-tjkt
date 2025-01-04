@@ -15,10 +15,16 @@ class DetailController extends Controller
 {
     public function riwayat(Request $request)
 {
-    $bulan = $request->input('bulan');
-    $tahun = $request->input('tahun');
+    $filterDate = $request->input('filter_date');
+    $bulan = null;
+    $tahun = null;
 
-    $detail = DetailPeminjaman::with(['peminjaman.kelas'])
+    if ($filterDate) {
+        $tahun = substr($filterDate, 0, 4);
+        $bulan = substr($filterDate, 5, 2);
+    }
+
+    $detail = DetailPeminjaman::with(['peminjaman.kelas', 'barang'])
         ->when($bulan, function ($query, $bulan) {
             return $query->whereMonth('created_at', $bulan);
         })
@@ -27,7 +33,13 @@ class DetailController extends Controller
         })
         ->get();
 
-    return view('admin.riwayat', compact('detail', 'bulan', 'tahun'));
+    // Jika request menggunakan AJAX, kembalikan data JSON
+    if ($request->ajax()) {
+        return response()->json(['data' => $detail]);
+    }
+
+    // Render halaman awal
+    return view('admin.riwayat', compact('detail'));
 }
 
 
