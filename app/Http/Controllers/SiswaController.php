@@ -10,14 +10,11 @@ class SiswaController extends Controller
 {
     public function index(){
         $siswa = siswa::all();
+        $kelas = kelas::all();
         $siswa = siswa::orderBy('id_siswa', 'asc')->get();
-        return view("siswa.index", compact("siswa"));
+        return view("admin.siswa", compact("siswa", "kelas"));
     }
 
-    public function create(){
-        $kelas = Kelas::all();
-        return view("siswa.create", compact("kelas")); 
-    }
 
     public function store(Request $request){
     // dd($request->all()); 
