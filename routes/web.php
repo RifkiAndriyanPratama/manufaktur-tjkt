@@ -48,7 +48,6 @@ Route::middleware('auth')->group(function () {
 
     // Route riwayat
     Route::get('/riwayat', [DetailController::class, 'riwayat'])->name('peminjaman.riwayat');
-
 });
     
 // Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
