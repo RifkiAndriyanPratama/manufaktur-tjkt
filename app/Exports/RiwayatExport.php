@@ -11,6 +11,21 @@ use App\Models\DetailPeminjaman;
 
 class RiwayatExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
+    protected $bulan;
+    protected $tahun;
+
+    /**
+     * RiwayatExport constructor.
+     * 
+     * @param int $bulan
+     * @param int $tahun
+     */
+    public function __construct($bulan, $tahun)
+    {
+        $this->bulan = $bulan;
+        $this->tahun = $tahun;
+    }
+
     /**
      * Mengambil Data
      *
@@ -19,6 +34,8 @@ class RiwayatExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     public function collection()
     {
         return DetailPeminjaman::with(['kategori', 'barang', 'peminjaman'])
+            ->whereMonth('created_at', $this->bulan)  // Filter berdasarkan bulan
+            ->whereYear('created_at', $this->tahun)   // Filter berdasarkan tahun
             ->get()
             ->map(function ($detail, $index) {
                 return [
@@ -54,7 +71,7 @@ class RiwayatExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     }
 
     /**
-     * styling
+     * Styling untuk sheet
      *
      * @param Worksheet $sheet
      * @return array

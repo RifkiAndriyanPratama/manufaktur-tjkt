@@ -13,12 +13,23 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DetailController extends Controller
 {
-    public function riwayat()
-    {
-        $detail = DetailPeminjaman::with(['peminjaman.kelas'])->get();
+    public function riwayat(Request $request)
+{
+    $bulan = $request->input('bulan');
+    $tahun = $request->input('tahun');
 
-        return view('admin.riwayat', compact('detail'));
-    }
+    $detail = DetailPeminjaman::with(['peminjaman.kelas'])
+        ->when($bulan, function ($query, $bulan) {
+            return $query->whereMonth('created_at', $bulan);
+        })
+        ->when($tahun, function ($query, $tahun) {
+            return $query->whereYear('created_at', $tahun);
+        })
+        ->get();
+
+    return view('admin.riwayat', compact('detail', 'bulan', 'tahun'));
+}
+
 
     public function create($id_peminjaman)
     {
@@ -42,16 +53,48 @@ class DetailController extends Controller
 
         return redirect()->route('peminjaman.show', $validated['id_peminjaman'])->with('success', 'Data Peminjaman Berhasil Ditambahkan!');
     }
-    public function exportPdf()
-    {
-        $detail = DetailPeminjaman::with(['peminjaman.kelas', 'barang'])->get();
+
+    public function exportPdf(Request $request){
+        $bulan = $request->query('bulan');
+        $tahun = $request->query('tahun');
+
+        if (!$bulan || !$tahun) {
+            return back()->with('error', 'Harap pilih bulan dan tahun terlebih dahulu!');
+        }
+
+        $detail = DetailPeminjaman::with(['peminjaman.kelas', 'barang'])
+            ->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+
+        if ($detail->isEmpty()) {
+            return back()->with('error', 'Data tidak ditemukan untuk bulan dan tahun yang dipilih.');
+        }
 
         $pdf = Pdf::loadView('pdf', compact('detail'));
 
-        return $pdf->download('riwayat_peminjaman.pdf');
+        return $pdf->download("riwayat_peminjaman_{$bulan}_{$tahun}.pdf");
     }
-    public function excel()
-    {
-        return Excel::download(new RiwayatExport, 'riwayat-peminjaman-barang.xlsx');
+
+
+    public function excel(Request $request){
+        $bulan = $request->get('bulan');
+        $tahun = $request->get('tahun');
+
+        if (!$bulan || !$tahun) {
+            return back()->with('error', 'Harap pilih bulan dan tahun terlebih dahulu!');
+        }
+
+        $detail = DetailPeminjaman::with(['kategori', 'barang', 'peminjaman'])
+            ->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+
+        if ($detail->isEmpty()) {
+            return back()->with('error', 'Data tidak ditemukan untuk bulan dan tahun yang dipilih.');
+        }
+
+        return Excel::download(new RiwayatExport($bulan, $tahun), "riwayat-peminjaman-barang_{$bulan}_{$tahun}.xlsx");
     }
+
 }
