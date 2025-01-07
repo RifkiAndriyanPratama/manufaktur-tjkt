@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('home');
 // });
 
-Route::get('/', [PeminjamanController::class,'index']);
+Route::get('/', [PeminjamanController::class,'index'])->name('peminjaman.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index' ])->name('admin.management');

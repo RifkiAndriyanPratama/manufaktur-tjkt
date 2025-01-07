@@ -7,11 +7,12 @@
     <title>Detail Peminjaman</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="{{ asset('toastr/toastr.min.css') }}" rel="stylesheet"> <!-- toastr CSS -->
 </head>
 
 <body class="bg-gray-100 h-screen flex flex-col p-6">
     <div>
-        <a href="{{ url()->previous() }}" class="text-gray-700 hover:text-gray-900 transition duration-200 flex items-center">
+    <a href="{{ route('peminjaman.index') }}" class="text-gray-700 hover:text-gray-900 transition duration-200 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
             </svg>
@@ -19,7 +20,6 @@
     </div>
     <h1 class="text-3xl font-semibold text-gray-800 mb-4">Detail Peminjaman</h1>
     <div class="bg-gray-200 rounded-lg p-4 mb-4">
-        <p class="text-gray-700">Kelas: <span class="font-bold">slot nama guru</span></p>
         <p class="text-gray-700">Kelas: <span class="font-bold">{{ $peminjaman->kelas->nama_kelas }}</span></p>
         <p class="text-gray-700">Materi: <span class="font-bold">{{ $peminjaman->materi_praktik }}</span></p>
         <p class="text-gray-700">Jam: <span class="font-bold">{{ $peminjaman->jam_mulai }} sampai {{ $peminjaman->jam_selesai }}</span></p>
@@ -135,8 +135,33 @@
         </div>
     </div>
 
-    <!-- Script for Modal -->
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('toastr/toastr.min.js') }}"></script>
     <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "2000",
+            "extendedTimeOut": "1000",
+            "showDuration": "300",
+            "hideDuration": "1000"
+        };
+    </script>
+
+    <script>
+        // Display Toastr Notifications if they exist in the session
+        @if (session()->has('success'))
+            toastr.success("{{ session('success') }}");
+        @elseif (session()->has('error'))
+            toastr.error("{{ session('error') }}");
+        @elseif (session()->has('info'))
+            toastr.info("{{ session('info') }}");
+        @endif
+
+        // Modal functionality
         const openMainModal = document.getElementById('openMainModal');
         const closeMainModal = document.getElementById('closeModal');
         const mainModal = document.getElementById('modalForm');
@@ -158,9 +183,7 @@
                 mainModal.classList.add('hidden');
             }
         });
-    </script>
 
-    <script>
         document.getElementById('kategori').addEventListener('change', function() {
             var kategoriId = this.value;
             var barangOptions = document.getElementById('barang').options;
@@ -174,9 +197,7 @@
                 }
             }
         });
-    </script>
 
-    <script>
         document.getElementById('decrement').addEventListener('click', function() {
             var jumlahInput = document.getElementById('jumlah_pinjam');
             var currentValue = parseInt(jumlahInput.value);
@@ -194,15 +215,3 @@
 </body>
 
 </html>
-        
-
-
-
-<!-- {{-- @if($peminjaman->status === 'dipinjam')
-                        <form action="{{ route('peminjaman.pengembalian', $peminjaman->id) }}" method="POST">
-                            @csrf
-                            <label for="tanggal_pengembalian">Tanggal Pengembalian:</label>
-                            <input type="date" name="tanggal_pengembalian" required>
-                            <button type="submit">Kembalikan</button>
-                        </form>
-                        @endif --}} -->
